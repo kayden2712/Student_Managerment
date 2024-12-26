@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Đăng nhập - Quản lí đăng kí sinh viên</title>
+  <link rel="stylesheet" href="Login.css"/>
+</head>
+<body>
+<div id="loginAccount">
+  <h1>Đăng nhập</h1>
+  <div class="login_box">
+    <form action="" method="post" class="login">
+      <label for="username">&#x1F464; Nhập tài khoản:</label>
+      <input type="text" placeholder="Tài khoản" name="username" id="username" required/>
+      <label for="password">&#x1F511; Nhập mật khẩu:</label>
+      <input type="password" placeholder="Mật khẩu" name="password" id="password" required/>
+      <input type="checkbox" id="show-pass1"/> Hiển thị mật khẩu
+      <button id="but" type="button" onclick="login()"><b>Đăng nhập</b></button>
+      <a href="Register.html">
+        <button type="button" id="btn_regis"><b>Đăng ký</b></button>
+      </a>
+      <div id="error" style="color: red; text-align: center; margin-top: 10px"></div>
+    </form>
+  </div>
+</div>
+<script src="Login.js"></script>
+</body>
+</html>

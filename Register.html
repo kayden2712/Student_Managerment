@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Đăng kí - Quản lí đăng ký sinh viên</title>
+    <link rel="stylesheet" href="Register.css">
+</head>
+<body>
+<div>
+    <form action="javascript:void(0)" method="post" class="controls" id="registrationForm">
+        <a href="Login.html"><span id="arrow">&#11013;</span></a>
+        <h1>Đăng ký</h1>
+        <div id="regisForm1">
+            <label for="input_acc">&#x1F464; Nhập tài khoản:<span style="color: red">*</span></label><br>
+            <input type="text" name="input_acc" id="input_acc" placeholder="Tài khoản" required>
+        </div>
+        <div id="regisForm2">
+            <label for="input_pass">&#x1F511; Nhập mật khẩu:<span style="color: red">*</span></label><br>
+            <input type="password" name="input_pass" id="input_pass" placeholder="Mật khẩu" required>
+            <input type="checkbox" id="show-pass1" onclick="togglePasswordVisibility('input_pass')"> Hiển thị mật khẩu
+        </div>
+        <div id="regisForm3">
+            <label for="input_agPass">&#x1F511; Nhập lại mật khẩu:<span style="color: red">*</span></label><br>
+            <input type="password" name="input_agPass" id="input_agPass" placeholder="Mật khẩu" required>
+            <input type="checkbox" id="show-pass2" onclick="togglePasswordVisibility('input_agPass')"> Hiển thị mật khẩu
+        </div>
+        <div>
+            <button type="submit" id="register"><b>Đăng ký</b></button>
+        </div>
+    </form>
+</div>
+<script src="Register.js"></script>
+</body>
+</html>
