@@ -51,8 +51,8 @@
 <div class="sidebar-main">
     <div class="menu-item-profile">
         <ul class="submenu">
-            <li><a href="#">Đổi tên</a></li>
             <li><a href="#">Đổi ảnh</a></li>
+            <li><a href="#">Đăng xuất</a></li>
         </ul>
     </div>
     <h2 id="header2">Danh Sách Sinh Viên</h2>
@@ -70,14 +70,14 @@
     <section class="table" id="student-table">
         <table>
             <thead>
-            <tr>
-                <th>STT</th>
-                <th>Mã sinh viên</th>
-                <th>Họ và tên</th>
-                <th>Ngày sinh</th>
-                <th>Lớp</th>
-                <th>Khoa</th>
-            </tr>
+                <tr>
+                    <th>STT</th>
+                    <th>Mã sinh viên</th>
+                    <th>Họ và tên</th>
+                    <th>Ngày sinh</th>
+                    <th>Lớp</th>
+                    <th>Khoa</th>
+                </tr>
             </thead>
             <tbody id="student-list">
             <!-- Dữ liệu sinh viên sẽ được hiển thị ở đây -->
@@ -140,8 +140,8 @@
         <input type="text" id="name" required>
         <label for="birthDay">Ngày sinh:<span style="color: red">*</span></label>
         <input type="date" id="birthDay" required>
-        <label for="class">Lớp:<span style="color: red">*</span></label>
-        <input type="text" id="class" required>
+        <label for="classs">Lớp:<span style="color: red">*</span></label>
+        <input type="text" id="classs" required>
         <label for="fos">Khoa:<span style="color: red">*</span></label>
         <input type="text" id="fos" required>
         <button type="submit" id="addPopup">Thêm</button>
@@ -149,5 +149,6 @@
     </form>
 </div>
 <script src="Home.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

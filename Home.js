@@ -38,10 +38,6 @@ function showStudentManagement() {
     studentTable.style.display = 'block';
 }
 
-function addStudent() {
-    alert('Thêm sinh viên mới!');
-}
-
 function editStudent() {
     alert('Chỉnh sửa thông tin sinh viên!');
 }
@@ -67,3 +63,78 @@ function toggleDarkMode() {
     table.classList.toggle('dark-mode');
 }
 
+// Hàm hiển thị sinh viên
+function loadStudents() {
+    const tableStudents = document.getElementById("student-list");
+
+    fetch("getStudents.php")
+        .then(response => response.json())
+        .then(students => {
+            tableStudents.innerHTML = "";
+            if (students.length === 0) {
+                tableStudents.innerHTML = "<tr><td colspan='6'>Không có sinh viên nào</td></tr>"
+            } else {
+                for (let i = 0; i < students.length; i++) {
+                    let row =
+                        `<tr>
+                            <td>${students[i].studentId}</td>
+                            <td>${students[i].fullName}</td>
+                            <td>${students[i].birthDate}</td>
+                            <td>${students[i].className}</td>
+                            <td>${students[i].major}</td>
+                         </tr>`
+                    tableStudents.innerHTML += row;
+                }
+            }
+        })
+        .catch(() => {
+            Swal.fire({
+                title: "Thông báo",
+                text: "Error",
+                icon: "error",
+                confirmButtonText: "OK",
+            });
+        })
+}
+
+window.onload = loadStudents;
+
+// Hàm thêm sinh viên
+function addStudent(event) {
+    event.preventDefault();
+
+    const studentCode = document.getElementById("code").value;
+    const name = document.getElementById("name").value;
+    const birthDay = document.getElementById("birthDay").value;
+    const classs = document.getElementById("classs").value;
+    const fieldOfStudy = document.getElementById("fos").value;
+
+    fetch('add.php', {
+        method: "POST",
+        body: JSON.stringify({
+            code: studentCode,
+            name: name,
+            birthDay: birthDay,
+            classs: classs,
+            fos: fieldOfStudy
+        }),
+        headers: {'Content-Type': 'application/json'}
+    })
+        .then(respone => respone.json())
+        .then(res => {
+            alert(res.message);
+            if (res.success) {
+                document.getElementById("addStudentForm").reset();
+                closePopup();
+                loadStudents();
+            }
+        })
+        .catch(() => {
+            Swal.fire({
+                title: "Thông báo",
+                text: "Error",
+                icon: "error",
+                confirmButtonText: "OK",
+            });
+        })
+}
