@@ -11,11 +11,11 @@
 <div class="sidebar">
     <h3>QUẢN LÝ ĐĂNG KÝ SINH VIÊN</h3>
     <hr>
-    <div class="menu-link collapsible">
-        <span class="menu-text-home"><a href="Home.html">Trang chủ</a></span>
+    <div class="menu-link collapsible" onclick="window.location.href='Home.html'">
+        <span class="menu-text-home">Trang chủ</span>
     </div>
     <div class="menu-item">
-        <div class="menu-link collapsible">
+        <div class="menu-link collapsible" onclick="showStudentManagement()">
             <span class="menu-text">Quản lý sinh viên</span>
         </div>
     </div>
@@ -57,7 +57,7 @@
     </div>
     <h2 id="header2">Danh Sách Sinh Viên</h2>
     <div class="dark-mode-toggle">
-        <button id="darkModeButton" onclick="toggleDarkMode()">Bật Dark Mode</button>
+        <button id="darkModeButton" onclick="toggleDarkMode()"></button>
     </div>
     <hr>
     <div id="Find">
@@ -134,14 +134,18 @@
 <div id="addStudentPopup">
     <form id="addStudentForm" onsubmit="addStudent(event)">
         <h2>Thêm sinh viên</h2>
-        <label for="name">Tên:</label>
+        <label for="code">Mã sinh viên:<span style="color: red">*</span></label>
+        <input type="text" id="code" required>
+        <label for="name">Họ và tên:<span style="color: red">*</span></label>
         <input type="text" id="name" required>
-        <label for="email">Email:</label>
-        <input type="email" id="email" required>
-        <label for="class">Lớp:</label>
+        <label for="birthDay">Ngày sinh:<span style="color: red">*</span></label>
+        <input type="date" id="birthDay" required>
+        <label for="class">Lớp:<span style="color: red">*</span></label>
         <input type="text" id="class" required>
-        <button type="submit">Thêm</button>
-        <button type="button" onclick="closePopup()">Đóng</button>
+        <label for="fos">Khoa:<span style="color: red">*</span></label>
+        <input type="text" id="fos" required>
+        <button type="submit" id="addPopup">Thêm</button>
+        <button type="button" id="closePopup" onclick="closePopup()">Đóng</button>
     </form>
 </div>
 <script src="Home.js"></script>

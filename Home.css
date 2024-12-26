@@ -14,12 +14,12 @@ body {
 .sidebar {
     position: relative;
     width: 25%;
-    background-color: rgb(223, 222, 222);
+    background: linear-gradient(to bottom, #E2FBCE, #076653, #E3EF26);
     padding: 15px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    overflow-y: auto; /* Cho phép cuộn dọc nếu nội dung quá dài */
     border: 2px black solid;
     padding-bottom: 80px; /* Tạo khoảng trống cho profile */
+    overflow: hidden; /* Tắt cuộn nội dung */
 }
 
 .sidebar hr {
@@ -51,8 +51,8 @@ body {
     font-weight: bold;
     color: #000000;
     text-decoration: none;
-    font-family:"Palatino Linotype", Times, serif;
-    font-size: 20px ;
+    font-family: "Palatino Linotype", Times, serif;
+    font-size: 20px;
     background-color: #AAF400FF;
 }
 
@@ -92,8 +92,8 @@ body {
     display: block;
     padding: 8px;
     border-radius: 15px;
-    font-family:"Palatino Linotype", Times, serif;
-    font-size: 20px ;
+    font-family: "Palatino Linotype", Times, serif;
+    font-size: 20px;
     background-color: #AAF400FF;
     font-weight: bold;
 
@@ -152,13 +152,15 @@ body {
     padding: 5px;
     height: 35px;
 }
+
 .collapsible-profile .menu-text {
     color: #000000;
-    font-family:"Palatino Linotype", Times, serif;
+    font-family: "Palatino Linotype", Times, serif;
     font-size: 20px;
     margin-right: 20px;
-    padding-left:20px ;
+    padding-left: 20px;
 }
+
 .collapsible-profile:hover {
     background-color: rgba(255, 255, 255, 0);
 }
@@ -360,9 +362,15 @@ button {
 }
 
 #addStudentPopup input {
-    width: 100%;
+    width: 96%;
     padding: 8px;
     margin: 10px 0;
+}
+
+#addStudentPopup label {
+    font-weight: bold;
+    font-size: 15px;
+    font-family: "Palatino Linotype", Times, serif;
 }
 
 #addStudentPopup button {
@@ -372,8 +380,10 @@ button {
 }
 
 #addStudentPopup h2 {
+    font-family: "Palatino Linotype", Times, serif;
     text-align: center;
 }
+
 /* Add styles for collapsible menu and submenu */
 .menu-item {
     margin-bottom: 10px;
@@ -423,9 +433,11 @@ button {
 .content_head .button {
 
 }
-.menu-toggle{
+
+.menu-toggle {
     color: black;
 }
+
 /* Dark Mode cho toàn bộ trang */
 body.dark-mode {
     background-color: #1a1a1a; /* Nền tối */
@@ -502,7 +514,8 @@ body.dark-mode {
     background-color: #444444; /* Nền nút popup */
     color: #e4e4e4; /* Chữ nút popup */
 }
-.dark-mode-toggle{
+
+.dark-mode-toggle {
     position: absolute;
     margin-top: -55px;
     padding-left: 800px;
@@ -585,4 +598,63 @@ body.dark-mode {
 
 .profile-sidebar:hover .profile-avatar img {
     transform: scale(1.1);
+}
+
+/* Style cho nút Dark Mode */
+#darkModeButton {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 8px 16px; /* Giảm padding để nút nhỏ gọn hơn */
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex; /* Thay đổi thành inline-flex */
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    white-space: nowrap; /* Ngăn text xuống dòng */
+}
+
+#darkModeButton::before {
+    content: '🌙';
+    font-size: 16px;
+}
+
+#darkModeButton:hover {
+    background-color: #444;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Khi Dark Mode được bật */
+.dark-mode #darkModeButton {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.dark-mode #darkModeButton::before {
+    content: '☀️';
+}
+
+.dark-mode-toggle {
+    position: absolute;
+    top: 20px;
+    right: 50px; /* Điều chỉnh khoảng cách từ mép phải */
+    z-index: 100;
+    margin: 0; /* Xóa margin */
+    padding: 0; /* Xóa padding */
+}
+
+#addPopup {
+    font-weight: bold;
+    font-size: 15px;
+    font-family: "Palatino Linotype", Times, serif;
+}
+
+#closePopup {
+    font-weight: bold;
+    font-size: 15px;
+    font-family: "Palatino Linotype", Times, serif;
 }
