@@ -128,7 +128,6 @@ body {
 }
 
 .sidebar-main hr {
-    margin-top: -1px;
     height: 2px;
     background-color: #000000;
     border: none;
@@ -344,7 +343,7 @@ button {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+    z-index: 9999;
 }
 
 #addStudentPopup {
@@ -357,7 +356,7 @@ button {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
+    z-index: 10000;
     width: 400px;
 }
 
@@ -380,6 +379,114 @@ button {
 }
 
 #addStudentPopup h2 {
+    font-family: "Palatino Linotype", Times, serif;
+    text-align: center;
+}
+
+
+#overlayDelete {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+}
+
+#deleteStudentPopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+    width: 400px;
+}
+
+#deleteStudentPopup input {
+    width: 96%;
+    padding: 8px;
+    margin: 10px 0;
+}
+
+#deleteStudentPopup label {
+    font-weight: bold;
+    font-size: 15px;
+    font-family: "Palatino Linotype", Times, serif;
+}
+
+#deleteStudentPopup button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+#overlayEdit {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+}
+
+#editStudentPopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+    width: 400px;
+}
+
+#editStudentPopup h2 {
+    font-family: "Palatino Linotype", Times, serif;
+    text-align: center;
+}
+
+#editStudentPopup label {
+    font-weight: bold;
+    font-size: 15px;
+    font-family: "Palatino Linotype", Times, serif;
+}
+
+#editStudentPopup input {
+    width: 96%;
+    padding: 8px;
+    margin: 10px 0;
+}
+
+#editStudentPopup button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+#editStudentPopup .button-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+#editStudentPopup .close-btn {
+    background: linear-gradient(45deg, #ff4800, #00eeff);
+    color: rgb(0, 0, 0);
+    font-weight: bold;  
+}
+
+#StudentPopup h2 {
     font-family: "Palatino Linotype", Times, serif;
     text-align: center;
 }
@@ -429,11 +536,6 @@ button {
 .button div {
     padding: 20px;
 }
-
-.content_head .button {
-
-}
-
 .menu-toggle {
     color: black;
 }
@@ -658,3 +760,266 @@ body.dark-mode {
     font-size: 15px;
     font-family: "Palatino Linotype", Times, serif;
 }
+/* Style cho container của các nút */
+.button {
+    position: fixed;
+    bottom: 0;
+    display: none; /* Mặc định ẩn */
+    justify-content: center;
+    gap: 30px;
+    padding: 25px;
+    margin-top: 300px;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Style chung cho các nút */
+.button button {
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: "Palatino Linotype", Times, serif;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 160px;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Style riêng cho từng nút */
+.addSinhVien button {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+}
+
+.EditSinhVien button {
+    background: linear-gradient(45deg, #2196F3, #1976D2);
+}
+
+.DeleteSinhVien button {
+    background: linear-gradient(45deg, #f44336, #d32f2f);
+}
+
+/* Hiệu ứng hover */
+.button button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.button button:active {
+    transform: translateY(1px);
+}
+
+/* Hiệu ứng ripple */
+.button button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0.2);
+    opacity: 0;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    transition: all 0.5s ease;
+}
+
+.button button:active::after {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 0s;
+}
+
+/* Dark mode styles */
+.dark-mode .button button {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .addSinhVien button {
+    background: linear-gradient(45deg, #388E3C, #2E7D32);
+}
+
+.dark-mode .EditSinhVien button {
+    background: linear-gradient(45deg, #1565C0, #0D47A1);
+}
+
+.dark-mode .DeleteSinhVien button {
+    background: linear-gradient(45deg, #C62828, #B71C1C);
+}
+
+/* Animation cho fade in/out */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+
+/* Style cho nút đóng */
+.close-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    margin-top: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    font-family: "Palatino Linotype", Times, serif;
+    font-size: 15px;
+}
+
+.close-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* Style cho button group */
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.button-group button {
+    flex: 1;
+    padding: 10px;
+}
+
+/* Style cho alert trong popup */
+.popup-alert {
+    padding: 10px 15px;
+    margin: 5px 0;
+    border-radius: 4px;
+    font-family: "Palatino Linotype", Times, serif;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    animation: slideInDown 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Style cho từng loại alert */
+.popup-alert.error {
+    background-color: #ffebee;
+    color: #c62828;
+    border-left: 4px solid #ef5350;
+}
+
+.popup-alert.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border-left: 4px solid #4caf50;
+}
+
+/* Icon cho alert */
+.popup-alert::before {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.popup-alert.error::before {
+    content: '⚠️';
+}
+
+.popup-alert.success::before {
+    content: '✅';
+}
+
+/* Animation cho alert */
+@keyframes slideInDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Progress bar cho alert tự động đóng */
+.popup-alert::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background-color: currentColor;
+    animation: progress 3s linear;
+}
+
+@keyframes progress {
+    from { width: 100%; }
+    to { width: 0%; }
+}
+
+/* Dark mode styles cho alert */
+.dark-mode .popup-alert.error {
+    background-color: #311b1b;
+    color: #ef5350;
+}
+
+.dark-mode .popup-alert.success {
+    background-color: #1b311b;
+    color: #4caf50;
+}
+
+/* Thêm animation cho popup */
+@keyframes fadeOut {
+    from { opacity: 0.5; }
+    to { opacity: 0; }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+    to {
+        transform: translate(-50%, -60%);
+        opacity: 0;
+    }
+}
+
+/* Thêm style cho hàng được chọn */
+#student-list tr.selected {
+    background-color: #e0e0e0;
+}
+
+#student-list tr:hover {
+    cursor: pointer;
+    background-color: #f5f5f5;
+}
+
+/* Dark mode */
+.dark-mode #student-list tr.selected {
+    background-color: #404040;
+}
+
+.dark-mode #student-list tr:hover {
+    background-color: #303030;
+}
+
