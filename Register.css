@@ -7,7 +7,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url("https://png.pngtree.com/thumb_back/fh260/background/20230318/pngtree-graduation-season-bachelor-cap-abstract-illustration-background-image_1949920.jpg");
+    background-image: url("img/th.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -22,16 +22,16 @@ h1 {
 }
 
 .controls {
-    background-color: #fafafa;
+    background-color: #ffffff;
     padding: 30px;
     border-radius: 20px;
     box-shadow: 0 8px 8px rgba(0, 0, 0, 0.4);
     width: 100%;
-    max-width: 600px;
+    max-width: 400px;
 }
 
 input {
-    width: 400px;
+    width: 350px;
     height: 20px;
     padding: 10px;
     margin: 10px auto;
@@ -46,23 +46,10 @@ label {
     color: #333;
 }
 
-input[type="checkbox"] {
-    width: 15px;
-    height: 15px;
-    padding: 10px;
-    margin: 6px 6px 30px 0px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    font-size: 10px;
-    display: inline-block;
-    margin-left: 10px;
-    accent-color: rgb(180, 39, 39);
-}
-
 #register {
     width: 100%;
     padding: 12px;
-    background-color: #25ec2a;
+    background-color: #16e61d;
     color: white;
     border: none;
     border-radius: 5px;
@@ -89,4 +76,20 @@ a{
 
 #arrow:active{
     color: #16e61d;
+}
+
+.password-container {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 25px;
+    top: 45px;
+    cursor: pointer;
+    color: #666;
+}
+
+.toggle-password:hover {
+    color: #333;
 }

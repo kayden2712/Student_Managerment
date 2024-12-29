@@ -23,11 +23,11 @@ CREATE TABLE sinhvien (
 -- Thêm dữ liệu mẫu
 INSERT INTO sinhvien (MaSV, HoTen, NgaySinh, Lop, Khoa) 
 VALUES 
-    ('SV001', 'Trần Đức Anh', '2005-11-25', 'HT21', 'Công nghệ thông tin'),
-    ('SV002', 'Lương Đức Độ', '2003-05-20', 'KT07', 'Kinh tế'),
-    ('SV003', 'Trần Văn Khoa', '2000-08-10', 'TT09', 'Công nghệ thông tin'),
-    ('SV004', 'Phạm Thị Huyền', '2000-12-25', 'NN03', 'Ngoại ngữ'),
-    ('SV005', 'Nguyễn Tiến Đoàn', '2005-10-26', 'HT21', 'Công nghệ thông tin');
+    ('SV001', 'Nguyễn Văn A', '2000-01-15', '12A1', 'Công nghệ thông tin'),
+    ('SV002', 'Trần Thị B', '2000-05-20', '12A2', 'Kinh tế'),
+    ('SV003', 'Lê Văn C', '2000-08-10', '12A1', 'Công nghệ thông tin'),
+    ('SV004', 'Phạm Thị D', '2000-12-25', '12A3', 'Ngoại ngữ'),
+    ('SV005', 'Hoàng Văn E', '2000-03-30', '12A2', 'Kinh tế');
 
 -- Kiểm tra ràng buộc và index
 ALTER TABLE sinhvien
