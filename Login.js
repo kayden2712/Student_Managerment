@@ -39,8 +39,6 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
             confirmButtonText: 'OK'
         }).then((result) => {
             if (result.isConfirmed) {
-                document.getElementById('input_acc').value = "";
-                document.getElementById('input_pass').value = "";
                 window.location.href = 'Home.html';
             }
         });

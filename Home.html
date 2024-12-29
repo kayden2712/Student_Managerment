@@ -11,40 +11,44 @@
 
 <body>
     <div class="sidebar">
-        <h3>QUẢN LÝ ĐĂNG KÝ SINH VIÊN</h3>
-        <hr>
-        <div class="menu-link collapsible" onclick="window.location.href='Home.html'">
-            <span class="menu-text-home">Trang chủ</span>
+        <div class="content-head">
+            <img src="img/logo.png" alt="UTT" class="logo">
         </div>
-        <div class="menu-item">
-            <div class="menu-link collapsible" onclick="showStudentManagement()">
-                <span class="menu-text">Quản lý sinh viên</span>
+        <div class="menu-container">
+            <div class="menu-link collapsible" onclick="window.location.href='Home.html'">
+                <span class="menu-text-home">Trang chủ</span>
             </div>
-        </div>
-        <div class="menu-item">
-            <div class="menu-link collapsible">
-                <span class="menu-text">Quản lý tín chỉ</span>
-                <span class="menu-toggle">&#9660;</span>
+            <div class="menu-item">
+                <div class="menu-link collapsible" onclick="showStudentManagement()">
+                    <span class="menu-text">Quản lý sinh viên</span>
+                </div>
             </div>
-            <ul class="submenu">
-                <li><a href="#">Danh sách tín chỉ</a></li>
-                <li><a href="#" onclick="showCreditRegistration(); return false;">Đăng ký tín chỉ</a></li>
-            </ul>
-        </div>
-        <div class="menu-item">
-            <div class="menu-link collapsible">
-                <span class="menu-text">Quản lý học tập</span>
-                <span class="menu-toggle">▼</span>
+            <div class="menu-item">
+                <div class="menu-link collapsible">
+                    <span class="menu-text">Quản lý tín chỉ</span>
+                    <span class="menu-toggle">▼</span>
+                </div>
+                <ul class="submenu">
+                    <li><a href="#">Danh sách tín chỉ</a></li>
+                    <li><a href="#" onclick="showCreditRegistration()">Đăng ký tín chỉ</a></li>
+                    <li><a href="#" onclick="showRegisteredCourses()">Danh sách tín chỉ đã đăng ký</a></li>
+                </ul>
             </div>
-            <ul class="submenu">
-                <li><a href="#">Chuyên cần</a></li>
-                <li><a href="#">Kết quả học tập</a></li>
-                <li><a href="#">Xếp loại</a></li>
-            </ul>
+            <div class="menu-item">
+                <div class="menu-link collapsible">
+                    <span class="menu-text">Quản lý học tập</span>
+                    <span class="menu-toggle">▼</span>
+                </div>
+                <ul class="submenu">
+                    <li><a href="#">Chuyên cần</a></li>
+                    <li><a href="#">Kết quả học tập</a></li>
+                    <li><a href="#">Xếp loại</a></li>
+                </ul>
+            </div>
         </div>
         <div class="profile-sidebar">
             <div class="profile-avatar">
-                <img src="img/It's%20me.jpg" alt="Avatar">
+                <img src="img/me.jpg" alt="Avatar">
             </div>
             <span class="profile-name">Trần Đức Anh</span>
         </div>
@@ -119,43 +123,74 @@
                 </div>
             </form>
         </div>
-            <div class="button">
-                <div class="addSinhVien">
-                    <button type="button" onclick="showPopup()">Thêm sinh viên</button>
-                </div>
-                <div class="EditSinhVien">
-                    <button type="button" onclick="showEditStudent()">Sửa sinh viên</button>
-                </div>
-                <div class="DeleteSinhVien">
-                    <button type="button" onclick="showDeleteStudent()">Xóa sinh viên</button>
-                </div>
+        <div class="button">
+            <div class="addSinhVien">
+                <button type="button" onclick="showPopup()">Thêm sinh viên</button>
+            </div>
+            <div class="EditSinhVien">
+                <button type="button" onclick="showEditStudent()">Sửa sinh viên</button>
+            </div>
+            <div class="DeleteSinhVien">
+                <button type="button" onclick="showDeleteStudent()">Xóa sinh viên</button>
+            </div>
         </div>
 
         <!-- Thêm section cho bảng đăng ký tín chỉ -->
         <section class="table" id="credit-registration-table" style="display: none;">
-            <h2>Đăng Ký Tín Chỉ</h2>
-            <hr>
+            <!-- Thêm ô tìm kiếm sinh viên -->
+            <div class="student-search-credit">
+                <input type="text" 
+                       id="studentSearchForCredit" 
+                       placeholder="Nhập mã sinh viên cần đăng ký..." 
+                       autocomplete="off">
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Mã môn học</th>
+                            <th>Tên môn học</th>
+                            <th>Số tín chỉ</th>
+                            <th>Giảng viên</th>
+                            <th>Đăng ký</th>
+                        </tr>
+                    </thead>
+                    <tbody id="credit-list">
+                        <!-- Dữ liệu môn học sẽ được thêm vào đây bằng JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <!-- Thêm nút đăng ký -->
+            <div class="credit-registration-buttons">
+                <button type="button" onclick="cancelRegistration()" class="cancel-button">
+                    <i class="fas fa-times"></i> Hủy
+                </button>
+                <button type="button" onclick="submitRegistration()" class="register-button">
+                    <i class="fas fa-check"></i> Xác nhận đăng ký
+                </button>
+            </div>
+        </section>
+
+        <!-- Thêm section hiển thị môn học đã đăng ký -->
+        <section class="table" id="registered-courses-table" style="display: none;">
             <table>
                 <thead>
                     <tr>
                         <th>STT</th>
+                        <th>Mã sinh viên</th>
+                        <th>Họ và tên</th>
                         <th>Mã môn học</th>
                         <th>Tên môn học</th>
                         <th>Số tín chỉ</th>
-                        <th>Học kỳ</th>
                         <th>Giảng viên</th>
-                        <th>Đăng ký</th>
+                        <th>Trạng thái</th>
                     </tr>
                 </thead>
-                <tbody id="credit-list">
-                    <!-- Dữ liệu môn học sẽ được thêm vào đây bằng JavaScript -->
+                <tbody id="registered-courses-list">
+                    <!-- Dữ liệu môn học đã đăng ký sẽ được thêm vào đây -->
                 </tbody>
             </table>
-            <!-- Thêm nút đăng ký -->
-            <div class="credit-registration-buttons">
-                <button type="button" onclick="submitRegistration()" class="register-button">Đăng ký môn học</button>
-                <button type="button" onclick="cancelRegistration()" class="cancel-button">Hủy</button>
-            </div>
         </section>
     </div>
 

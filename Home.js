@@ -34,6 +34,45 @@ function showEditStudent() {
         showEditButtons();
     }
 }
+// Hàm hiển thị nút chỉnh sửa
+function showEditButtons() {
+    const table = document.getElementById('student-table');
+    table.classList.add('show-edit');
+
+    // Thêm nút chỉnh sửa vào mỗi dòng nếu chưa có
+    const rows = document.querySelectorAll('#student-list tr');
+    rows.forEach(row => {
+        if (!row.querySelector('.edit-button')) {
+            const editCell = document.createElement('td');
+            editCell.className = 'edit-column';
+            const editButton = document.createElement('button');
+            editButton.className = 'edit-button';
+            editButton.innerHTML = '<i class="fas fa-edit"></i> Sửa';
+            editButton.onclick = () => showEditPopupForRow(row);
+            editCell.appendChild(editButton);
+            row.appendChild(editCell);
+        }
+    });
+}
+
+// Hàm ẩn nút chỉnh sửa
+function hideEditButtons() {
+    const table = document.getElementById('student-table');
+    table.classList.remove('show-edit');
+}
+
+// Hàm hiển thị popup chỉnh sửa với dữ liệu từ dòng được chọn
+function showEditPopupForRow(row) {
+    const cells = row.cells;
+    document.getElementById('editStudentForm').querySelector('#code').value = cells[1].textContent;
+    document.getElementById('editStudentForm').querySelector('#name').value = cells[2].textContent;
+    document.getElementById('editStudentForm').querySelector('#birthDay').value = cells[3].textContent;
+    document.getElementById('editStudentForm').querySelector('#class').value = cells[4].textContent;
+    document.getElementById('editStudentForm').querySelector('#fos').value = cells[5].textContent;
+
+    document.getElementById('overlayEdit').style.display = 'block';
+    document.getElementById('editStudentPopup').style.display = 'block';
+}
 
 // Đóng popup
 function closeAddPopup() {
@@ -54,15 +93,60 @@ function closeEditPopup() {
     hideEditButtons();
 }
 
+// Hàm hiển thị quản lý sinh viên
 function showStudentManagement() {
-    // Hiển thị bảng và các nút quản lý
-    const buttonContainer = document.querySelector('.button');
-    const buttonFind = document.querySelector('.find');
-    const studentTable = document.getElementById('student-table');
+    // Thay đổi tiêu đề
+    document.getElementById('header2').textContent = 'Danh Sách Sinh Viên';
 
-    buttonContainer.style.display = 'flex';
-    buttonFind.style.display = 'none';
-    studentTable.style.display = 'block';
+    // Hiển thị phần quản lý sinh viên
+    document.getElementById('student-table').style.display = 'block';
+    document.querySelector('.button').style.display = 'flex';
+    document.getElementById('Find').style.display = 'none';
+
+    // Ẩn các phần quản lý tín chỉ
+    document.getElementById('credit-registration-table').style.display = 'none';
+    document.getElementById('registered-courses-table').style.display = 'none';
+}
+
+// Hàm hiển thị đăng ký tín chỉ
+function showCreditRegistration() {
+    // Thay đổi tiêu đề
+    document.getElementById('header2').textContent = 'Đăng Ký Tín Chỉ';
+
+    // Ẩn phần quản lý sinh viên
+    document.getElementById('student-table').style.display = 'none';
+    document.querySelector('.button').style.display = 'none';
+    document.getElementById('Find').style.display = 'none';
+
+    // Hiển thị bảng đăng ký tín chỉ
+    document.getElementById('credit-registration-table').style.display = 'block';
+    document.getElementById('registered-courses-table').style.display = 'none';
+
+    // Load danh sách môn học
+    loadCourses();
+}
+
+// Hàm hiển thị môn học đã đăng ký
+function showRegisteredCourses() {
+    // Thay đổi tiêu đề
+    document.getElementById('header2').textContent = 'Môn Học Đã Đăng Ký';
+
+    // Ẩn phần quản lý sinh viên
+    document.getElementById('student-table').style.display = 'none';
+    document.querySelector('.button').style.display = 'none';
+    document.getElementById('Find').style.display = 'none';
+
+    // Ẩn bảng đăng ký tín chỉ và hiển thị bảng môn học đã đăng ký
+    document.getElementById('credit-registration-table').style.display = 'none';
+    document.getElementById('registered-courses-table').style.display = 'block';
+
+    // Load danh sách môn học đã đăng ký
+    loadRegisteredCourses();
+}
+
+// Hàm hủy đăng ký và quay lại màn hình danh sách sinh viên
+function cancelRegistration() {
+    showStudentManagement();
 }
 
 function showPopupAlert(message, type) {
@@ -103,10 +187,10 @@ function toggleDarkMode() {
 }
 
 // Thêm event listener với debounce
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('textSearch');
     const debouncedSearch = debounce(searchStudent, 300); // Đợi 300ms sau khi ngừng gõ
-    
+
     searchInput.addEventListener('input', debouncedSearch);
 });
 
@@ -275,7 +359,7 @@ function debounce(func, wait) {
 // Hàm tìm kiếm
 function searchStudent() {
     const keyword = document.getElementById('textSearch').value.trim();
-    
+
     if (!keyword) {
         loadStudents(); // Load lại danh sách khi ô tìm kiếm trống
         return;
@@ -378,12 +462,16 @@ function editStudent(event) {
 
 // Thêm hàm xử lý hiển thị bảng đăng ký tín chỉ
 function showCreditRegistration() {
+    const findStudent = document.getElementById('Find');
+    const tableRegistered = document.getElementById('registered-courses-table');
     // Ẩn bảng sinh viên nếu đang hiển thị
     const studentTable = document.getElementById('student-table');
     if (studentTable) {
         studentTable.style.display = 'none';
+        tableRegistered.style.display = 'none';
+        findStudent.style.display = "none";
     }
-
+    document.getElementById('header2').textContent = 'Đăng ký tín chỉ';
     // Ẩn các button quản lý sinh viên
     const buttonContainer = document.querySelector('.button');
     if (buttonContainer) {
@@ -392,7 +480,8 @@ function showCreditRegistration() {
 
     // Tạo và hiển thị bảng đăng ký tín chỉ
     const mainContent = document.querySelector('.sidebar-main');
-    
+
+
     // Kiểm tra nếu bảng đã tồn tại thì hiển thị, nếu chưa thì tạo mới
     let creditTable = document.getElementById('credit-registration-table');
     if (!creditTable) {
@@ -409,7 +498,6 @@ function showCreditRegistration() {
                         <th>Mã môn học</th>
                         <th>Tên môn học</th>
                         <th>Số tín chỉ</th>
-                        <th>Học kỳ</th>
                         <th>Giảng viên</th>
                         <th>Đăng ký</th>
                     </tr>
@@ -426,9 +514,9 @@ function showCreditRegistration() {
 
     // Giả lập dữ liệu môn học (sau này sẽ lấy từ database)
     const subjects = [
-        { id: 1, code: 'INT1234', name: 'Lập trình Web', credits: 3, semester: 1, lecturer: 'Nguyễn Văn A' },
-        { id: 2, code: 'INT1235', name: 'Cơ sở dữ liệu', credits: 4, semester: 1, lecturer: 'Trần Thị B' },
-        { id: 3, code: 'INT1236', name: 'Lập trình Java', credits: 3, semester: 1, lecturer: 'Lê Văn C' }
+        { id: 1, code: 'INT1234', name: 'Lập trình Web', credits: 3, lecturer: 'Nguyễn Văn A' },
+        { id: 2, code: 'INT1235', name: 'Cơ sở dữ liệu', credits: 4, lecturer: 'Trần Thị B' },
+        { id: 3, code: 'INT1236', name: 'Lập trình Java', credits: 3, lecturer: 'Lê Văn C' }
     ];
 
     // Hiển thị dữ liệu vào bảng
@@ -439,7 +527,6 @@ function showCreditRegistration() {
             <td style="text-align: center;">${subject.code}</td>
             <td>${subject.name}</td>
             <td style="text-align: center;">${subject.credits}</td>
-            <td style="text-align: center;">${subject.semester}</td>
             <td style="text-align: center;">${subject.lecturer}</td>
             <td style="text-align: center;">
                 <input type="checkbox" class="register-checkbox" data-subject-id="${subject.id}">
@@ -449,10 +536,10 @@ function showCreditRegistration() {
 }
 
 // Thêm event listener cho link đăng ký tín chỉ
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const creditRegistrationLink = document.querySelector('a[href="#"]');
     if (creditRegistrationLink && creditRegistrationLink.textContent === 'Đăng ký tín chỉ') {
-        creditRegistrationLink.addEventListener('click', function(e) {
+        creditRegistrationLink.addEventListener('click', function (e) {
             e.preventDefault();
             showCreditRegistration();
         });
@@ -461,7 +548,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Thêm hàm xử lý đăng ký
 function submitRegistration() {
-    const selectedSubjects = document.querySelectorAll('.register-checkbox:checked');
+    const selectedSubjects = document.querySelectorAll('.register-checkbox:checked:not([disabled])');
     if (selectedSubjects.length === 0) {
         Swal.fire({
             title: 'Thông báo',
@@ -471,14 +558,6 @@ function submitRegistration() {
         });
         return;
     }
-
-    // Xử lý đăng ký môn học ở đây
-    Swal.fire({
-        title: 'Thành công!',
-        text: 'Đăng ký môn học thành công!',
-        icon: 'success',
-        confirmButtonText: 'OK'
-    });
 }
 
 // Thêm hàm hủy đăng ký
@@ -491,50 +570,140 @@ function cancelRegistration() {
     if (studentTable) studentTable.style.display = 'block';
     if (creditTable) creditTable.style.display = 'none';
     if (buttonContainer) buttonContainer.style.display = 'flex';
+    window.location.href = 'Home.html';
 }
 
-// Hàm hiển thị nút chỉnh sửa
-function showEditButtons() {
-    const table = document.getElementById('student-table');
-    table.classList.add('show-edit');
-    
-    // Thêm nút chỉnh sửa vào mỗi dòng nếu chưa có
-    const rows = document.querySelectorAll('#student-list tr');
-    rows.forEach(row => {
-        if (!row.querySelector('.edit-button')) {
-            const editCell = document.createElement('td');
-            editCell.className = 'edit-column';
-            const editButton = document.createElement('button');
-            editButton.className = 'edit-button';
-            editButton.innerHTML = '<i class="fas fa-edit"></i> Sửa';
-            editButton.onclick = () => showEditPopupForRow(row);
-            editCell.appendChild(editButton);
-            row.appendChild(editCell);
+// Trong hàm showCreditRegistration()
+function showRegisteredCourses() {
+    // Ẩn các bảng khác
+    document.getElementById('student-table').style.display = 'none';
+    document.getElementById('credit-registration-table').style.display = 'none';
+    document.querySelector('.button').style.display = 'none';
+    document.getElementById('Find').style.display = 'none';
+
+    // Hiển thị bảng môn học đã đăng ký
+    const registeredTable = document.getElementById('registered-courses-table');
+    registeredTable.style.display = 'block';
+
+    // Thay đổi tiêu đề
+    document.getElementById('header2').textContent = 'Danh sách tín chỉ đã đăng ký';
+
+
+}
+
+
+// Hàm format ngày tháng
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('vi-VN');
+}
+
+// Hàm lấy text trạng thái
+function getStatusText(status) {
+    return status === 1 ?
+        '<span class="status-active">Đã đăng ký</span>' :
+        '<span class="status-inactive">Đã hủy</span>';
+}
+
+// Hàm hiển thị danh sách tín chỉ
+function showCourseList() {
+    // Thay đổi tiêu đề
+    document.getElementById('header2').textContent = 'Danh Sách Tín Chỉ';
+
+    // Ẩn tất cả các phần khác
+    hideAllSections();
+
+    // Hiển thị bảng danh sách tín chỉ
+    document.getElementById('course-list-table').style.display = 'block';
+
+    // Load danh sách tín chỉ
+    loadCourseList();
+}
+
+// Hàm ẩn tất cả các section
+function hideAllSections() {
+    const sections = [
+        'student-table',
+        'credit-registration-table',
+        'registered-courses-table',
+        'course-list-table',
+        'Find'
+    ];
+
+    sections.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.style.display = 'none';
         }
     });
+
+    // Ẩn nút
+    const buttonContainer = document.querySelector('.button');
+    if (buttonContainer) {
+        buttonContainer.style.display = 'none';
+    }
 }
 
-// Hàm ẩn nút chỉnh sửa
-function hideEditButtons() {
-    const table = document.getElementById('student-table');
-    table.classList.remove('show-edit');
+// Hàm load danh sách tín chỉ
+function loadCourseList() {
+    showLoadingSpinner();
+
+    fetch('getCourseList.php')
+        .then(response => response.json())
+        .then(result => {
+            hideLoadingSpinner();
+
+            if (!result.success) {
+                throw new Error(result.message);
+            }
+
+            const courseList = document.getElementById('course-list');
+            if (!courseList) return;
+
+            courseList.innerHTML = result.data.map((course, index) => `
+                <tr>
+                    <td style="text-align: center;">${index + 1}</td>
+                    <td style="text-align: center;">${course.MaMH}</td>
+                    <td>${course.TenMH}</td>
+                    <td style="text-align: center;">${course.SoTC}</td>
+                    <td style="text-align: center;">${course.GiangVien}</td>
+                    <td style="text-align: center;">${course.SoLuongDaDangKy}/${course.SoLuongMax}</td>
+                </tr>
+            `).join('');
+        })
+        .catch(error => {
+            hideLoadingSpinner();
+            Swal.fire({
+                title: 'Lỗi!',
+                text: error.message || 'Không thể tải danh sách môn học',
+                icon: 'error'
+            });
+        });
 }
 
-// Hàm hiển thị popup chỉnh sửa với dữ liệu từ dòng được chọn
-function showEditPopupForRow(row) {
-    const cells = row.cells;
-    document.getElementById('editStudentForm').querySelector('#code').value = cells[1].textContent;
-    document.getElementById('editStudentForm').querySelector('#name').value = cells[2].textContent;
-    document.getElementById('editStudentForm').querySelector('#birthDay').value = formatDateForInput(cells[3].textContent);
-    document.getElementById('editStudentForm').querySelector('#class').value = cells[4].textContent;
-    document.getElementById('editStudentForm').querySelector('#fos').value = cells[5].textContent;
-    
-    document.getElementById('overlayEdit').style.display = 'block';
-    document.getElementById('editStudentPopup').style.display = 'block';
+// Thêm loading spinner
+function showLoadingSpinner() {
+    const spinner = document.createElement('div');
+    spinner.id = 'loading-spinner';
+    spinner.innerHTML = '<div class="spinner"></div>';
+    document.body.appendChild(spinner);
 }
 
-// Hàm format ngày tháng cho input type="date"
-function formatDateForInput(dateString) {
-    const date = new Date(dateString);
-    return date.toISOString().split('T')[0];
+function hideLoadingSpinner() {
+    const spinner = document.getElementById('loading-spinner');
+    if (spinner) {
+        spinner.remove();
+    }
 }
+
+// Thêm event listeners khi trang được load
+document.addEventListener('DOMContentLoaded', function () {
+    // Event listener cho link danh sách tín chỉ
+    const courseListLink = document.querySelector('a[href="#"]');
+    if (courseListLink && courseListLink.textContent === 'Danh sách tín chỉ') {
+        courseListLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            showCourseList();
+        });
+    }
+});
