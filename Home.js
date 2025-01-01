@@ -661,7 +661,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (registeredCoursesLink) {
         registeredCoursesLink.addEventListener('click', function (e) {
             e.preventDefault();
-            //showRegisteredCourses;
+            //showRegisteredCourses();
         });
     }
 });
@@ -688,6 +688,7 @@ function showCreditRegistration() {
 //     // Yêu cầu nhập mã sinh viên
 //     const studentId = prompt('Nhập mã sinh viên để xem danh sách đăng ký:');
 //     if (!studentId) return;
+
 //     loadRegisteredCourses(studentId);
 // }
 
@@ -1128,10 +1129,10 @@ function hideAllTables() {
     });
 }
 
-// // Thêm event listener cho nút xem danh sách đã đăng ký
-// document.addEventListener('DOMContentLoaded', function () {
-//     document.getElementById('show-registered-courses').addEventListener('click', showRegisteredCourses);
-// });
+// Thêm event listener cho nút xem danh sách đã đăng ký
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('show-registered-courses').addEventListener('click', showRegisteredCourses);
+});
 
 // Hàm đăng ký tín chỉ
 function registerCourses() {
@@ -1348,6 +1349,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const imageInput = document.getElementById('imageInput');
     const profileImage = document.getElementById('profileImage');
 
+    // Khôi phục ảnh đại diện từ session khi tải trang
+    fetch('api.php?action=getAvatar')
+        .then(response => response.json())
+        .then(result => {
+            if (result.success && result.data.avatarUrl) {
+                profileImage.src = result.data.avatarUrl;
+            }
+        });
+
     imageInput.addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
@@ -1361,12 +1371,36 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Hiển thị ảnh đã chọn
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                profileImage.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
+            // Tạo FormData object để upload file
+            const formData = new FormData();
+            formData.append('avatar', file);
+
+            // Upload ảnh lên server
+            fetch('api.php?action=uploadAvatar', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    // Cập nhật ảnh đại diện
+                    profileImage.src = result.data.avatarUrl;
+                    Swal.fire({
+                        title: 'Thành công',
+                        text: 'Đã cập nhật ảnh đại diện',
+                        icon: 'success'
+                    });
+                } else {
+                    throw new Error(result.message);
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    title: 'Lỗi',
+                    text: error.message || 'Không thể upload ảnh',
+                    icon: 'error'
+                });
+            });
         }
     });
 });

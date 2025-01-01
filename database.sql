@@ -64,3 +64,12 @@ INSERT INTO monhoc (MaMH, TenMH, SoTC, GiangVien, SoLuongMax) VALUES
 ('CNTT001', 'Lập trình Java', 3, 'Nguyễn Văn X', 40),
 ('CNTT002', 'Cơ sở dữ liệu', 4, 'Trần Thị Y', 35),
 ('CNTT003', 'Mạng máy tính', 3, 'Lê Văn Z', 30);
+
+-- Tạo bảng user_avatars để lưu đường dẫn ảnh
+CREATE TABLE user_avatars (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id VARCHAR(50) NOT NULL,
+    avatar_path VARCHAR(255) NOT NULL,
+    upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_user (user_id)
+);

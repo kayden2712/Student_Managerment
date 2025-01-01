@@ -3287,39 +3287,78 @@
 2025-01-01 13:47:55 - Request: /ProjectManagerment/api.php?action=cancelRegistration
 2025-01-01 13:47:56 - Request: /ProjectManagerment/api.php?action=getRegisteredStudents&courseId=ATTT002
 2025-01-01 13:49:40 - Request: /ProjectManagerment/api.php?action=getStudents
-2025-01-01 13:52:55 - Request: /ProjectManagerment/api.php?action=getStudents
-2025-01-01 13:52:57 - Request: /ProjectManagerment/api.php?action=getCourseList
-2025-01-01 13:52:57 - Getting course list
-2025-01-01 13:52:57 - Found 5 courses
-2025-01-01 13:52:58 - Request: /ProjectManagerment/api.php?action=getRegisteredStudents&courseId=ATTT002
-2025-01-01 13:53:00 - Request: /ProjectManagerment/api.php?action=getRegisteredStudents&courseId=ATTT003
-2025-01-01 13:53:02 - Request: /ProjectManagerment/api.php?action=getRegisteredStudents&courseId=CNTT001
-2025-01-01 13:53:03 - Request: /ProjectManagerment/api.php?action=getCourseList
-2025-01-01 13:53:03 - Getting course list
-2025-01-01 13:53:03 - Found 5 courses
-2025-01-01 13:53:06 - Request: /ProjectManagerment/api.php?action=getCourseList
-2025-01-01 13:53:06 - Getting course list
-2025-01-01 13:53:06 - Found 5 courses
-2025-01-01 13:53:15 - Request: /ProjectManagerment/api.php?action=editCourse
-2025-01-01 13:53:16 - Request: /ProjectManagerment/api.php?action=getCourseList
-2025-01-01 13:53:16 - Getting course list
-2025-01-01 13:53:16 - Found 5 courses
-2025-01-01 13:53:27 - Request: /ProjectManagerment/api.php?action=deleteCourse
-2025-01-01 13:53:27 - Attempting to delete course: ATTT003
-2025-01-01 13:53:27 - Current registrations: 1
-2025-01-01 13:53:27 - Actual registrations in dangkymonhoc: 1
-2025-01-01 13:53:27 - Error deleting course: Không thể xóa môn học đã có sinh viên đăng ký
-2025-01-01 13:53:27 - Error: Không thể xóa môn học đã có sinh viên đăng ký
-2025-01-01 13:53:31 - Request: /ProjectManagerment/api.php?action=deleteCourse
-2025-01-01 13:53:31 - Attempting to delete course: ATTT002
-2025-01-01 13:53:31 - Current registrations: 0
-2025-01-01 13:53:31 - Successfully deleted course: ATTT002
-2025-01-01 13:53:32 - Request: /ProjectManagerment/api.php?action=getCourseList
-2025-01-01 13:53:32 - Getting course list
-2025-01-01 13:53:32 - Found 4 courses
-2025-01-01 13:53:42 - Request: /ProjectManagerment/api.php?action=getStudents
-2025-01-01 13:53:45 - Request: /ProjectManagerment/api.php?action=getCourseList
-2025-01-01 13:53:45 - Getting course list
-2025-01-01 13:53:45 - Found 4 courses
-2025-01-01 13:53:47 - Request: /ProjectManagerment/api.php?action=getRegisteredStudents&courseId=ATTT003
-2025-01-01 13:53:49 - Request: /ProjectManagerment/api.php?action=getRegisteredStudents&courseId=ATTT003
+2025-01-01 13:18:12 - Request: /api.php?action=getStudents
+2025-01-01 13:18:13 - Request: /api.php?action=getStudents
+2025-01-01 13:18:13 - Request: /api.php?action=getStudents
+2025-01-01 13:18:18 - Request: /api.php?action=getStudents
+2025-01-01 13:18:56 - Request: /api.php?action=getStudents
+2025-01-01 13:18:57 - Request: /api.php?action=getStudents
+2025-01-01 13:19:03 - Request: /api.php?action=getCourseList
+2025-01-01 13:19:03 - Getting course list
+2025-01-01 13:19:03 - Found 4 courses
+2025-01-01 13:19:05 - Request: /api.php?action=getRegisteredStudents&courseId=CNTT002
+2025-01-01 13:20:50 - Request: /api.php?action=getStudents
+2025-01-01 13:20:58 - Request: /api.php?action=getStudents
+2025-01-01 13:20:58 - Request: /api.php?action=getStudents
+2025-01-01 13:21:54 - Request: /api.php?action=getAvatar
+2025-01-01 13:21:54 - Request: /api.php?action=getStudents
+2025-01-01 13:21:59 - Request: /api.php?action=uploadAvatar
+2025-01-01 13:22:01 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:01 - Request: /api.php?action=getStudents
+2025-01-01 13:22:02 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:02 - Request: /api.php?action=getStudents
+2025-01-01 13:22:03 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:03 - Request: /api.php?action=getStudents
+2025-01-01 13:22:04 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:04 - Request: /api.php?action=getStudents
+2025-01-01 13:22:15 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:15 - Request: /api.php?action=getStudents
+2025-01-01 13:22:15 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:16 - Request: /api.php?action=getStudents
+2025-01-01 13:22:16 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:16 - Request: /api.php?action=getStudents
+2025-01-01 13:22:16 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:16 - Request: /api.php?action=getStudents
+2025-01-01 13:22:42 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:42 - Request: /api.php?action=getStudents
+2025-01-01 13:22:43 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:43 - Request: /api.php?action=getStudents
+2025-01-01 13:22:43 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:43 - Request: /api.php?action=getStudents
+2025-01-01 13:22:44 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:44 - Request: /api.php?action=getStudents
+2025-01-01 13:22:49 - Request: /api.php?action=uploadAvatar
+2025-01-01 13:22:51 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:51 - Request: /api.php?action=getStudents
+2025-01-01 13:22:52 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:52 - Request: /api.php?action=getStudents
+2025-01-01 13:22:53 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:53 - Request: /api.php?action=getStudents
+2025-01-01 13:22:53 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:53 - Request: /api.php?action=getStudents
+2025-01-01 13:22:54 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:54 - Request: /api.php?action=getStudents
+2025-01-01 13:22:55 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:55 - Request: /api.php?action=getStudents
+2025-01-01 13:22:55 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:55 - Request: /api.php?action=getStudents
+2025-01-01 13:22:55 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:55 - Request: /api.php?action=getStudents
+2025-01-01 13:22:56 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:56 - Request: /api.php?action=getStudents
+2025-01-01 13:22:56 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:56 - Request: /api.php?action=getStudents
+2025-01-01 13:22:56 - Request: /api.php?action=getAvatar
+2025-01-01 13:22:56 - Request: /api.php?action=getStudents
+2025-01-01 13:24:19 - Request: /api.php?action=getAvatar
+2025-01-01 13:24:19 - Request: /api.php?action=getStudents
+2025-01-01 13:24:23 - Request: /api.php?action=uploadAvatar
+2025-01-01 13:24:23 - Error: Người dùng chưa đăng nhập
+2025-01-01 13:24:35 - Request: /api.php?action=getAvatar
+2025-01-01 13:24:35 - Request: /api.php?action=getStudents
+2025-01-01 14:48:23 - Request: /ProjectManagerment/api.php?action=getAvatar
+2025-01-01 14:48:23 - Request: /ProjectManagerment/api.php?action=getStudents
+2025-01-01 14:49:39 - Request: /ProjectManagerment/api.php?action=getStudents
+2025-01-01 14:49:49 - Request: /ProjectManagerment/api.php?action=getCourseList
+2025-01-01 14:49:49 - Getting course list
+2025-01-01 14:49:49 - Found 4 courses

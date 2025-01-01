@@ -517,6 +517,60 @@ try {
             sendJsonResponse(true, $students);
             break;
 
+        case 'uploadAvatar':
+            if ($method !== 'POST') {
+                throw new Exception('Method not allowed');
+            }
+
+            // Kiểm tra xem có file được upload không
+            if (!isset($_FILES['avatar'])) {
+                throw new Exception('Không tìm thấy file ảnh');
+            }
+
+            $file = $_FILES['avatar'];
+            $fileName = $file['name'];
+            $fileType = $file['type'];
+            $fileTmpName = $file['tmp_name'];
+            $fileError = $file['error'];
+
+            // Kiểm tra lỗi upload
+            if ($fileError !== UPLOAD_ERR_OK) {
+                throw new Exception('Lỗi khi upload file');
+            }
+
+            // Kiểm tra định dạng file
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            if (!in_array($fileType, $allowedTypes)) {
+                throw new Exception('Chỉ chấp nhận file ảnh (JPEG, PNG, GIF)');
+            }
+
+            // Tạo tên file mới để tránh trùng lặp
+            $newFileName = uniqid() . '_' . $fileName;
+            $uploadPath = 'uploads/avatars/' . $newFileName;
+
+            // Tạo thư mục nếu chưa tồn tại
+            if (!file_exists('uploads/avatars')) {
+                mkdir('uploads/avatars', 0777, true);
+            }
+
+            // Di chuyển file upload vào thư mục đích
+            if (move_uploaded_file($fileTmpName, $uploadPath)) {
+                // Lưu đường dẫn ảnh vào session hoặc database
+                session_start();
+                $_SESSION['avatar'] = $uploadPath;
+                
+                sendJsonResponse(true, ['avatarUrl' => $uploadPath], 'Upload ảnh thành công');
+            } else {
+                throw new Exception('Không thể lưu file ảnh');
+            }
+            break;
+
+        case 'getAvatar':
+            session_start();
+            $avatarUrl = $_SESSION['avatar'] ?? 'img/me.jpg'; // Đường dẫn ảnh mặc định
+            sendJsonResponse(true, ['avatarUrl' => $avatarUrl]);
+            break;
+
         default:
             throw new Exception('Invalid action');
     }
