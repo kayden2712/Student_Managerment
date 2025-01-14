@@ -208,15 +208,15 @@ try {
                 throw new Exception('Method not allowed');
             }
 
-            // Kiểm tra profile đã hoàn thành chưa
-            $stmt = $conn->prepare("SELECT is_profile_completed FROM users WHERE id = ?");
-            $stmt->bind_param("i", $_SESSION['user_id']);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $user = $result->fetch_assoc();
+            // Kiểm tra profile đã hoàn thành chưa (sử dụng PDO)
+            if (isset($_SESSION['user_id'])) {
+                $stmt = $conn->prepare("SELECT is_profile_completed FROM users WHERE id = ?");
+                $stmt->execute([$_SESSION['user_id']]);
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if (!$user['is_profile_completed']) {
-                throw new Exception('Vui lòng cập nhật đầy đủ thông tin cá nhân trước khi đăng ký môn học');
+                if ($user && !$user['is_profile_completed']) {
+                    throw new Exception('Vui lòng cập nhật đầy đủ thông tin cá nhân trước khi đăng ký môn học');
+                }
             }
 
             $data = json_decode(file_get_contents('php://input'), true);
@@ -229,6 +229,8 @@ try {
             }
 
             try {
+                $conn->beginTransaction();
+                
                 $successCourses = [];
                 $errorCourses = [];
 
@@ -239,84 +241,77 @@ try {
                     throw new Exception('Mã sinh viên không tồn tại');
                 }
 
-                // Kiểm tra tất cả các đăng ký trùng và tình trạng môn học
                 $placeholders = str_repeat('?,', count($courseIds) - 1) . '?';
                 
                 // Kiểm tra môn học đã đăng ký
                 $checkRegistered = $conn->prepare("
                     SELECT MaMH 
                     FROM dangkymonhoc 
-                    WHERE MaSV = ? 
-                    AND MaMH IN ($placeholders)
+                    WHERE MaSV = ? AND MaMH IN ($placeholders)
+                    FOR UPDATE
                 ");
                 $checkRegistered->execute(array_merge([$studentId], $courseIds));
                 $registeredCourses = $checkRegistered->fetchAll(PDO::FETCH_COLUMN);
 
-                // Kiểm tra thông tin các môn học
+                // Kiểm tra thông tin và khóa các môn học
                 $checkCourses = $conn->prepare("
                     SELECT MaMH, SoLuongDaDangKy, SoLuongMax 
                     FROM monhoc 
                     WHERE MaMH IN ($placeholders)
+                    FOR UPDATE
                 ");
                 $checkCourses->execute($courseIds);
-                $courseInfo = $checkCourses->fetchAll(PDO::FETCH_ASSOC);
-                $validCourses = [];
                 $courseStatus = [];
-
-                // Xử lý thông tin môn học
-                foreach ($courseInfo as $course) {
+                
+                while ($course = $checkCourses->fetch(PDO::FETCH_ASSOC)) {
                     $courseStatus[$course['MaMH']] = $course;
                 }
 
-                // Phân loại các môn học
+                // Phân loại và đăng ký môn học
                 foreach ($courseIds as $courseId) {
                     if (in_array($courseId, $registeredCourses)) {
                         $errorCourses[] = ["courseId" => $courseId, "reason" => "Đã đăng ký trước đó"];
-                    } elseif (!isset($courseStatus[$courseId])) {
+                        continue;
+                    }
+                    
+                    if (!isset($courseStatus[$courseId])) {
                         $errorCourses[] = ["courseId" => $courseId, "reason" => "Môn học không tồn tại"];
-                    } elseif ($courseStatus[$courseId]['SoLuongDaDangKy'] >= $courseStatus[$courseId]['SoLuongMax']) {
+                        continue;
+                    }
+                    
+                    if ($courseStatus[$courseId]['SoLuongDaDangKy'] >= $courseStatus[$courseId]['SoLuongMax']) {
                         $errorCourses[] = ["courseId" => $courseId, "reason" => "Lớp đã đầy"];
-                    } else {
-                        $validCourses[] = $courseId;
+                        continue;
+                    }
+
+                    // Cập nhật số lượng và thêm đăng ký
+                    try {
+                        $updateStmt = $conn->prepare("
+                            UPDATE monhoc 
+                            SET SoLuongDaDangKy = SoLuongDaDangKy + 1 
+                            WHERE MaMH = ? AND SoLuongDaDangKy < SoLuongMax
+                        ");
+                        $updateStmt->execute([$courseId]);
+
+                        if ($updateStmt->rowCount() > 0) {
+                            $insertStmt = $conn->prepare("
+                                INSERT INTO dangkymonhoc (MaSV, MaMH, NgayDangKy) 
+                                VALUES (?, ?, NOW())
+                            ");
+                            $insertStmt->execute([$studentId, $courseId]);
+                            $successCourses[] = $courseId;
+                        } else {
+                            $errorCourses[] = ["courseId" => $courseId, "reason" => "Không thể cập nhật số lượng"];
+                        }
+                    } catch (PDOException $e) {
+                        $errorCourses[] = ["courseId" => $courseId, "reason" => "Lỗi khi đăng ký: " . $e->getMessage()];
                     }
                 }
 
-                // Nếu có môn học hợp lệ để đăng ký
-                if (!empty($validCourses)) {
-                    $conn->beginTransaction();
-
-                    foreach ($validCourses as $courseId) {
-                        try {
-                            // Cập nhật số lượng đăng ký
-                            $updateStmt = $conn->prepare("
-                                UPDATE monhoc 
-                                SET SoLuongDaDangKy = SoLuongDaDangKy + 1 
-                                WHERE MaMH = ? 
-                                AND SoLuongDaDangKy < SoLuongMax
-                            ");
-                            $updateStmt->execute([$courseId]);
-
-                            if ($updateStmt->rowCount() > 0) {
-                                // Thêm đăng ký
-                                $insertStmt = $conn->prepare("
-                                    INSERT INTO dangkymonhoc (MaSV, MaMH, NgayDangKy) 
-                                    VALUES (?, ?, NOW())
-                                ");
-                                $insertStmt->execute([$studentId, $courseId]);
-                                $successCourses[] = $courseId;
-                            } else {
-                                $errorCourses[] = ["courseId" => $courseId, "reason" => "Không thể cập nhật số lượng"];
-                            }
-                        } catch (Exception $e) {
-                            $errorCourses[] = ["courseId" => $courseId, "reason" => "Lỗi khi đăng ký"];
-                        }
-                    }
-
-                    if (!empty($successCourses)) {
-                        $conn->commit();
-                    } else {
-                        $conn->rollBack();
-                    }
+                if (!empty($successCourses)) {
+                    $conn->commit();
+                } else {
+                    $conn->rollBack();
                 }
 
                 // Tạo thông báo kết quả

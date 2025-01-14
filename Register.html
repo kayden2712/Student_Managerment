@@ -8,7 +8,7 @@
 </head>
 <body>
     <div>
-        <form class="controls" id="registerForm">
+        <form class="controls" id="registerForm" onsubmit="register(event)">
             <a href="Login.html"><span id="arrow">&#11013;</span></a>
             <h1>Đăng kí</h1>
             <div id="regisForm1">
@@ -31,14 +31,13 @@
     </div>
 
     <script>
-        document.getElementById('registerForm').addEventListener('submit', async function(event) {
+        async function register(event) {
             event.preventDefault();
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
             const confirmPassword = document.getElementById("password_again").value;
             const errorDiv = document.getElementById("errorDiv");
 
-            // Validate form
             if (!username || !password || !confirmPassword) {
                 errorDiv.textContent = "Vui lòng điền đầy đủ thông tin!";
                 return;
@@ -73,7 +72,7 @@
                 console.error("Error details:", error);
                 errorDiv.textContent = "Đã xảy ra lỗi: " + error.message;
             }
-        });
+        };
     </script>
 </body>
 </html>

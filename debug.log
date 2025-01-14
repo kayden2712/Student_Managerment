@@ -3804,3 +3804,46 @@
 2025-01-13 06:56:26 - Request: /api.php?action=getStudents
 2025-01-14 06:37:44 - Request: /Student_Managerment/api.php?action=getAvatar
 2025-01-14 06:37:44 - Request: /Student_Managerment/api.php?action=getStudents
+2025-01-14 08:02:15 - Request: /Student_Managerment/api.php?action=getAvatar
+2025-01-14 08:02:15 - Request: /Student_Managerment/api.php?action=getStudents
+2025-01-14 08:02:16 - Request: /Student_Managerment/api.php?action=getStudents
+2025-01-14 08:02:19 - Request: /Student_Managerment/api.php?action=getCourses
+2025-01-14 08:02:19 - Request: /Student_Managerment/api.php?action=getCourses
+2025-01-14 08:02:21 - Request: /Student_Managerment/api.php?action=getRegisteredStudents&courseCode=CNTT
+2025-01-14 08:02:24 - Request: /Student_Managerment/api.php?action=cancelRegistration
+2025-01-14 08:02:25 - Request: /Student_Managerment/api.php?action=getRegisteredStudents&courseCode=CNTT
+2025-01-14 08:02:27 - Request: /Student_Managerment/api.php?action=getCourseList
+2025-01-14 08:02:27 - Error: Invalid action
+2025-01-14 08:02:40 - Request: /Student_Managerment/api.php?action=getCourseList
+2025-01-14 08:02:40 - Error: Invalid action
+2025-01-14 08:02:43 - Request: /Student_Managerment/api.php?action=getCourses
+2025-01-14 08:02:43 - Request: /Student_Managerment/api.php?action=getCourses
+2025-01-14 08:02:44 - Request: /Student_Managerment/api.php?action=getCourseList
+2025-01-14 08:02:44 - Error: Invalid action
+2025-01-14 08:04:21 - Request: /Student_Managerment/api.php?action=getAvatar
+2025-01-14 08:04:21 - Request: /Student_Managerment/api.php?action=getStudents
+2025-01-14 08:04:27 - Request: /Student_Managerment/api.php?action=getCourseList
+2025-01-14 08:04:27 - Error: Invalid action
+2025-01-14 08:12:39 - Request: /Student_Managerment/api.php?action=getAvatar
+s
+2025-01-14 08:12:39 - Request: /Student_Managerment/api.php?action=getAvatar
+2025-01-14 08:12:39 - Request: /Student_Managerment/api.php?action=getStudents
+2025-01-14 08:12:42 - Request: /Student_Managerment/api.php?action=getCourseList
+2025-01-14 08:12:42 - Getting course list
+2025-01-14 08:12:42 - Found 3 courses
+2025-01-14 08:12:55 - Request: /Student_Managerment/api.php?action=registerCourse
+2025-01-14 08:12:56 - Request: /Student_Managerment/api.php?action=getCourseList
+2025-01-14 08:12:56 - Getting course list
+2025-01-14 08:12:56 - Found 3 courses
+2025-01-14 08:13:16 - Request: /Student_Managerment/api.php?action=registerCourse
+2025-01-14 08:13:18 - Request: /Student_Managerment/api.php?action=getCourseList
+2025-01-14 08:13:18 - Getting course list
+2025-01-14 08:13:18 - Found 3 courses
+2025-01-14 08:13:18 - Request: /Student_Managerment/api.php?action=getCourses
+2025-01-14 08:13:18 - Request: /Student_Managerment/api.php?action=getCourses
+2025-01-14 08:13:20 - Request: /Student_Managerment/api.php?action=getRegisteredStudents&courseCode=CNTT
+2025-01-14 08:13:21 - Request: /Student_Managerment/api.php?action=getRegisteredStudents&courseCode=CNTT1
+2025-01-14 08:13:23 - Request: /Student_Managerment/api.php?action=getRegisteredStudents&courseCode=KT1
+2025-01-14 08:13:27 - Request: /Student_Managerment/api.php?action=cancelRegistration
+2025-01-14 08:13:28 - Request: /Student_Managerment/api.php?action=getRegisteredStudents&courseCode=KT1
+2025-01-14 08:13:35 - Request: /Student_Managerment/api.php?action=getFaculties
