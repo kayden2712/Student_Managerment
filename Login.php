@@ -23,18 +23,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 "success" => true, 
                 "message" => "Đăng nhập thành công",
                 "role" => $user['role']
-            ]);
+            ], JSON_UNESCAPED_UNICODE);
         } else {
             echo json_encode([
                 "success" => false, 
                 "message" => "Tài khoản hoặc mật khẩu không chính xác"
-            ]);
+            ], JSON_UNESCAPED_UNICODE);
         }
     } catch (PDOException $e) {
         echo json_encode([
             "success" => false,
             "message" => "Lỗi đăng nhập: " . $e->getMessage()
-        ]);
+        ], JSON_UNESCAPED_UNICODE);
     }
 }
 ?>

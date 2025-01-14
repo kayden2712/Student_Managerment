@@ -1467,7 +1467,9 @@ function hideButton() {
 }
 function logout(){
     if(confirm("Bạn có chắc chắn muốn đăng xuất?")){
-        window.location.href = 'Login.html';
+        fetch('logout.php').then(() => {
+            window.location.href = 'Login.html';
+        });
     }
 }
 

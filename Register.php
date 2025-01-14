@@ -13,13 +13,13 @@ set_error_handler(function($severity, $message, $file, $line) {
 try {
     // Check if config.php exists
     if (!file_exists("config.php")) {
-        throw new Exception("Configuration file not found");
+        throw new Exception("Không tìm thấy tệp cấu hình");
     }
 
     require_once "config.php";
 
     if (!isset($conn) || !$conn) {
-        throw new Exception("Database connection failed");
+        throw new Exception("Kết nối cơ sở dữ liệu thất bại");
     }
 
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -61,15 +61,15 @@ try {
             ], JSON_UNESCAPED_UNICODE));
         }
     } else {
-        throw new Exception("Invalid request method");
+        throw new Exception("Phương thức yêu cầu không hợp lệ");
     }
 } catch (Throwable $e) {
     die(json_encode([
         "success" => false,
-        "message" => "Lỗi server: " . $e->getMessage(),
+        "message" => "Lỗi máy chủ: " . $e->getMessage(),
         "debug" => [
-            "file" => $e->getFile(),
-            "line" => $e->getLine()
+            "file" => "Tệp: " . $e->getFile(),
+            "line" => "Dòng: " . $e->getLine()
         ]
     ], JSON_UNESCAPED_UNICODE));
 }

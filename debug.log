@@ -3802,3 +3802,5 @@
 2025-01-13 02:33:08 - Request: /api.php?action=getCourses
 2025-01-13 06:56:26 - Request: /api.php?action=getAvatar
 2025-01-13 06:56:26 - Request: /api.php?action=getStudents
+2025-01-14 06:37:44 - Request: /Student_Managerment/api.php?action=getAvatar
+2025-01-14 06:37:44 - Request: /Student_Managerment/api.php?action=getStudents
