@@ -9,6 +9,17 @@ USE quanlysinhvien;
 -- Xóa bảng nếu tồn tại
 DROP TABLE IF EXISTS sinhvien;
 
+-- Tạo bảng tài khoản
+CREATE DATABASE user_management;
+USE user_management;
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    registration_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    last_login_time DATETIME DEFAULT NULL
+);
+
 -- Tạo bảng sinh viên
 CREATE TABLE sinhvien (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -19,6 +30,10 @@ CREATE TABLE sinhvien (
     Khoa VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+ALTER TABLE users
+    ADD COLUMN student_id VARCHAR(20) UNIQUE,
+    ADD COLUMN class VARCHAR(50),
+    ADD COLUMN faculty VARCHAR(50);
 
 -- Thêm dữ liệu mẫu
 INSERT INTO sinhvien (MaSV, HoTen, NgaySinh, Lop, Khoa) 
@@ -48,6 +63,25 @@ CREATE TABLE monhoc (
     SoLuongDaDangKy INT NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Tạo bảng khoa
+CREATE TABLE khoa (
+    MaKhoa VARCHAR(20) PRIMARY KEY,
+    TenKhoa VARCHAR(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Thêm dữ liệu mẫu cho bảng khoa
+INSERT INTO khoa (MaKhoa, TenKhoa) VALUES 
+('CNTT', 'Công nghệ thông tin'),
+('KTPM', 'Kỹ thuật phần mềm'),
+('HTTT', 'Hệ thống thông tin'),
+('KHMT', 'Khoa học máy tính'),
+('KT', 'Kinh tế'),
+('NN', 'Ngoại ngữ');
+
+-- Cập nhật bảng users để sử dụng khóa ngoại
+ALTER TABLE users
+ADD CONSTRAINT fk_users_khoa
+FOREIGN KEY (faculty) REFERENCES khoa(MaKhoa);
 -- Thêm bảng đăng ký môn học
 CREATE TABLE dangkymonhoc (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -73,3 +107,15 @@ CREATE TABLE user_avatars (
     upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE KEY unique_user (user_id)
 );
+-- Tạo bảng học kỳ
+CREATE TABLE hocky (
+    MaHK INT PRIMARY KEY,
+    TenHK VARCHAR(50),
+    NgayBatDau DATE,
+    NgayKetThuc DATE,
+    TrangThai BOOLEAN DEFAULT TRUE
+);
+
+-- Thêm cột học kỳ vào bảng môn học
+ALTER TABLE monhoc ADD COLUMN MaHK INT;
+ALTER TABLE monhoc ADD FOREIGN KEY (MaHK) REFERENCES hocky(MaHK);

@@ -3362,3 +3362,443 @@
 2025-01-01 14:49:49 - Request: /ProjectManagerment/api.php?action=getCourseList
 2025-01-01 14:49:49 - Getting course list
 2025-01-01 14:49:49 - Found 4 courses
+2025-01-01 14:59:20 - Request: /WEB/api.php?action=getStudents
+2025-01-01 14:59:29 - Request: /WEB/api.php?action=getStudents
+2025-01-01 14:59:31 - Request: /WEB/api.php?action=getCourseList
+2025-01-01 14:59:31 - Getting course list
+2025-01-01 14:59:31 - Found 3 courses
+2025-01-01 14:59:33 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 14:59:34 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 14:59:42 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT002
+2025-01-01 14:59:44 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT003
+2025-01-01 14:59:46 - Request: /WEB/api.php?action=getCourseList
+2025-01-01 14:59:46 - Getting course list
+2025-01-01 14:59:46 - Found 3 courses
+2025-01-01 14:59:54 - Request: /WEB/api.php?action=getStudents
+2025-01-01 15:00:01 - Request: /WEB/api.php?action=getCourseList
+2025-01-01 15:00:01 - Getting course list
+2025-01-01 15:00:01 - Found 3 courses
+2025-01-01 15:00:04 - Request: /WEB/api.php?action=getCourseList
+2025-01-01 15:00:04 - Getting course list
+2025-01-01 15:00:04 - Found 3 courses
+2025-01-01 15:00:16 - Request: /WEB/api.php?action=registerCourse
+2025-01-01 15:00:17 - Request: /WEB/api.php?action=getCourseList
+2025-01-01 15:00:17 - Getting course list
+2025-01-01 15:00:17 - Found 3 courses
+2025-01-01 15:00:20 - Request: /WEB/api.php?action=getCourseList
+2025-01-01 15:00:20 - Getting course list
+2025-01-01 15:00:20 - Found 3 courses
+2025-01-01 15:00:21 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:00:39 - Request: /WEB/api.php?action=uploadAvatar
+2025-01-01 15:00:39 - Error: Chỉ chấp nhận file ảnh (JPEG, PNG, GIF)
+2025-01-01 15:00:46 - Request: /WEB/api.php?action=getAvatar
+2025-01-01 15:01:08 - Request: /WEB/api.php?action=getAvatar
+2025-01-01 15:01:08 - Request: /WEB/api.php?action=getStudents
+2025-01-01 15:01:15 - Request: /WEB/api.php?action=getCourseList
+2025-01-01 15:01:15 - Getting course list
+2025-01-01 15:01:15 - Found 3 courses
+2025-01-01 15:01:17 - Request: /WEB/api.php?action=getCourseList
+2025-01-01 15:01:17 - Getting course list
+2025-01-01 15:01:17 - Found 3 courses
+2025-01-01 15:01:19 - Request: /WEB/api.php?action=getAvatar
+2025-01-01 15:01:26 - Request: /WEB/api.php?action=getCourseList
+2025-01-01 15:01:26 - Getting course list
+2025-01-01 15:01:26 - Found 3 courses
+2025-01-01 15:01:34 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:08:02 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:08:04 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT002
+2025-01-01 15:08:06 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT003
+2025-01-01 15:08:07 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:08:10 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT002
+2025-01-01 15:08:12 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT003
+2025-01-01 15:08:16 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:08:19 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT002
+2025-01-01 15:08:22 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT003
+2025-01-01 15:08:24 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:08:40 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:08:42 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:08:43 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT002
+2025-01-01 15:10:00 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:10:42 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:10:44 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:10:45 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:10:49 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:10:53 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:11:23 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:11:24 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:11:26 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:11:30 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-01 15:14:22 - Request: /WEB/api.php?action=getStudents
+2025-01-01 15:14:34 - Request: /WEB/api.php?action=getStudents
+2025-01-01 15:14:35 - Request: /WEB/api.php?action=getStudents
+2025-01-01 15:14:43 - Request: /WEB/api.php?action=getCourseList
+2025-01-01 15:14:43 - Getting course list
+2025-01-01 15:14:43 - Found 3 courses
+2025-01-01 15:14:45 - Request: /WEB/api.php?action=getRegisteredStudents&courseId=CNTT001
+2025-01-11 03:28:04 - Request: /api.php?action=getAvatar
+2025-01-11 03:28:04 - Request: /api.php?action=getStudents
+2025-01-11 04:04:12 - Request: /api.php?action=cancelRegistration
+2025-01-11 04:04:12 - Error: Thiếu thông tin cần thiết
+2025-01-11 09:51:02 - Request: /api.php?action=getAvatar
+2025-01-11 09:51:02 - Request: /api.php?action=getStudents
+2025-01-11 09:51:15 - Request: /api.php?action=getStudents
+2025-01-11 09:51:19 - Request: /api.php?action=getCourseList
+2025-01-11 09:51:19 - Getting course list
+2025-01-11 09:51:19 - Found 4 courses
+2025-01-11 09:51:23 - Request: /api.php?action=getCourseList
+2025-01-11 09:51:23 - Getting course list
+2025-01-11 09:51:23 - Found 4 courses
+2025-01-11 09:51:25 - Request: /api.php?action=getRegisteredStudents&courseId=CNTT002
+2025-01-11 09:51:43 - Request: /api.php?action=getRegisteredStudents&courseId=CNTT003
+2025-01-11 09:53:00 - Request: /api.php?action=getStudents
+2025-01-11 09:57:51 - Request: /api.php?action=getAvatar
+2025-01-11 09:57:51 - Request: /api.php?action=getStudents
+2025-01-11 10:07:17 - Request: /api.php?action=getAvatar
+2025-01-11 10:07:17 - Request: /api.php?action=getStudents
+2025-01-11 10:07:24 - Request: /api.php?action=getStudents
+2025-01-11 10:07:27 - Request: /api.php?action=getAvatar
+2025-01-11 10:07:27 - Request: /api.php?action=getStudents
+2025-01-11 10:07:33 - Request: /api.php?action=getCourseList
+2025-01-11 10:07:33 - Getting course list
+2025-01-11 10:07:33 - Found 4 courses
+2025-01-11 10:07:48 - Request: /api.php?action=getCourseList
+2025-01-11 10:07:48 - Getting course list
+2025-01-11 10:07:48 - Found 4 courses
+2025-01-11 10:07:50 - Request: /api.php?action=getCourseList
+2025-01-11 10:07:50 - Getting course list
+2025-01-11 10:07:50 - Found 4 courses
+2025-01-11 10:07:52 - Request: /api.php?action=getCourseList
+2025-01-11 10:07:52 - Getting course list
+2025-01-11 10:07:52 - Found 4 courses
+2025-01-11 10:08:22 - Request: /api.php?action=getAvatar
+2025-01-11 10:08:22 - Request: /api.php?action=getStudents
+2025-01-11 10:08:27 - Request: /api.php?action=getStudents
+2025-01-11 12:36:44 - Request: /api.php?action=getAvatar
+2025-01-11 12:36:44 - Request: /api.php?action=getStudents
+2025-01-11 12:36:47 - Request: /api.php?action=getFaculties
+2025-01-11 12:36:59 - Request: /api.php?action=getCourseList
+2025-01-11 12:36:59 - Getting course list
+2025-01-11 12:36:59 - Found 4 courses
+2025-01-11 12:37:03 - Request: /api.php?action=getFaculties
+2025-01-11 12:39:05 - Request: /api.php?action=getCourseList
+2025-01-11 12:39:05 - Getting course list
+2025-01-11 12:39:05 - Found 4 courses
+2025-01-11 12:46:22 - Request: /api.php?action=getAvatar
+2025-01-11 12:46:22 - Request: /api.php?action=getStudents
+2025-01-11 12:46:24 - Request: /api.php?action=getStudents
+2025-01-11 12:46:25 - Request: /api.php?action=getCourseList
+2025-01-11 12:46:25 - Getting course list
+2025-01-11 12:46:25 - Found 4 courses
+2025-01-11 12:46:30 - Request: /api.php?action=getCourseList
+2025-01-11 12:46:30 - Getting course list
+2025-01-11 12:46:30 - Found 4 courses
+2025-01-11 12:46:31 - Request: /api.php?action=getCourseList
+2025-01-11 12:46:31 - Getting course list
+2025-01-11 12:46:31 - Found 4 courses
+2025-01-11 12:46:47 - Request: /api.php?action=deleteCourse
+2025-01-11 12:46:47 - Attempting to delete course: CNTT002
+2025-01-11 12:46:47 - Current registrations: 2
+2025-01-11 12:46:47 - Actual registrations in dangkymonhoc: 3
+2025-01-11 12:46:47 - Error deleting course: Không thể xóa môn học đã có sinh viên đăng ký
+2025-01-11 12:46:47 - Error: Không thể xóa môn học đã có sinh viên đăng ký
+2025-01-11 12:46:54 - Request: /api.php?action=getCourseList
+2025-01-11 12:46:54 - Getting course list
+2025-01-11 12:46:54 - Found 4 courses
+2025-01-11 12:46:55 - Request: /api.php?action=getCourseList
+2025-01-11 12:46:55 - Getting course list
+2025-01-11 12:46:55 - Found 4 courses
+2025-01-11 12:46:56 - Request: /api.php?action=getRegisteredStudents&courseId=CNTT002
+2025-01-11 12:46:58 - Request: /api.php?action=cancelRegistration
+2025-01-11 12:46:58 - Request: /api.php?action=getRegisteredStudents&courseId=CNTT002
+2025-01-11 12:47:00 - Request: /api.php?action=cancelRegistration
+2025-01-11 12:47:00 - Request: /api.php?action=getRegisteredStudents&courseId=CNTT002
+2025-01-11 12:47:02 - Request: /api.php?action=cancelRegistration
+2025-01-11 12:47:02 - Request: /api.php?action=getRegisteredStudents&courseId=CNTT002
+2025-01-11 12:47:04 - Request: /api.php?action=getRegisteredStudents&courseId=CNTT003
+2025-01-11 12:47:06 - Request: /api.php?action=cancelRegistration
+2025-01-11 12:47:06 - Request: /api.php?action=getRegisteredStudents&courseId=CNTT003
+2025-01-11 12:47:08 - Request: /api.php?action=cancelRegistration
+2025-01-11 12:47:09 - Request: /api.php?action=getRegisteredStudents&courseId=CNTT003
+2025-01-11 12:47:13 - Request: /api.php?action=cancelRegistration
+2025-01-11 12:47:14 - Request: /api.php?action=getRegisteredStudents&courseId=CNTT003
+2025-01-11 12:47:19 - Request: /api.php?action=cancelRegistration
+2025-01-11 12:47:19 - Request: /api.php?action=getRegisteredStudents&courseId=CNTT003
+2025-01-11 12:47:22 - Request: /api.php?action=getRegisteredStudents&courseId=CNTT004
+2025-01-11 12:47:24 - Request: /api.php?action=cancelRegistration
+2025-01-11 12:47:25 - Request: /api.php?action=getRegisteredStudents&courseId=CNTT004
+2025-01-11 12:47:27 - Request: /api.php?action=cancelRegistration
+2025-01-11 12:47:28 - Request: /api.php?action=getRegisteredStudents&courseId=CNTT004
+2025-01-11 12:47:29 - Request: /api.php?action=cancelRegistration
+2025-01-11 12:47:29 - Request: /api.php?action=getRegisteredStudents&courseId=CNTT004
+2025-01-11 12:47:31 - Request: /api.php?action=getAvatar
+2025-01-11 12:47:31 - Request: /api.php?action=getStudents
+2025-01-11 12:47:32 - Request: /api.php?action=getAvatar
+2025-01-11 12:47:32 - Request: /api.php?action=getStudents
+2025-01-11 12:47:32 - Request: /api.php?action=getAvatar
+2025-01-11 12:47:32 - Request: /api.php?action=getStudents
+2025-01-11 12:47:34 - Request: /api.php?action=getCourseList
+2025-01-11 12:47:34 - Getting course list
+2025-01-11 12:47:34 - Found 4 courses
+2025-01-11 12:47:40 - Request: /api.php?action=deleteCourse
+2025-01-11 12:47:40 - Attempting to delete course: CNTT002
+2025-01-11 12:47:40 - Current registrations: -1
+2025-01-11 12:47:40 - Successfully deleted course: CNTT002
+2025-01-11 12:47:41 - Request: /api.php?action=getCourseList
+2025-01-11 12:47:41 - Getting course list
+2025-01-11 12:47:41 - Found 3 courses
+2025-01-11 12:47:45 - Request: /api.php?action=deleteCourse
+2025-01-11 12:47:45 - Attempting to delete course: CNTT003
+2025-01-11 12:47:45 - Current registrations: -2
+2025-01-11 12:47:45 - Successfully deleted course: CNTT003
+2025-01-11 12:47:45 - Request: /api.php?action=getCourseList
+2025-01-11 12:47:45 - Getting course list
+2025-01-11 12:47:45 - Found 2 courses
+2025-01-11 12:47:49 - Request: /api.php?action=deleteCourse
+2025-01-11 12:47:49 - Attempting to delete course: CNTT004
+2025-01-11 12:47:49 - Current registrations: -2
+2025-01-11 12:47:49 - Successfully deleted course: CNTT004
+2025-01-11 12:47:49 - Request: /api.php?action=getCourseList
+2025-01-11 12:47:49 - Getting course list
+2025-01-11 12:47:49 - Found 1 courses
+2025-01-11 12:47:51 - Request: /api.php?action=getRegisteredStudents&courseId=con%20c%C3%A2c
+2025-01-11 12:47:53 - Request: /api.php?action=cancelRegistration
+2025-01-11 12:47:54 - Request: /api.php?action=getRegisteredStudents&courseId=con%20c%C3%A2c
+2025-01-11 12:47:56 - Request: /api.php?action=cancelRegistration
+2025-01-11 12:47:56 - Request: /api.php?action=getRegisteredStudents&courseId=con%20c%C3%A2c
+2025-01-11 12:47:57 - Request: /api.php?action=cancelRegistration
+2025-01-11 12:47:58 - Request: /api.php?action=getRegisteredStudents&courseId=con%20c%C3%A2c
+2025-01-11 12:47:59 - Request: /api.php?action=cancelRegistration
+2025-01-11 12:48:00 - Request: /api.php?action=getRegisteredStudents&courseId=con%20c%C3%A2c
+2025-01-11 12:48:11 - Request: /api.php?action=deleteCourse
+2025-01-11 12:48:11 - Attempting to delete course: con câc
+2025-01-11 12:48:11 - Current registrations: -2
+2025-01-11 12:48:11 - Successfully deleted course: con câc
+2025-01-11 12:48:11 - Request: /api.php?action=getCourseList
+2025-01-11 12:48:11 - Getting course list
+2025-01-11 12:48:11 - Found 0 courses
+2025-01-11 12:48:13 - Request: /api.php?action=getStudents
+2025-01-11 12:48:23 - Request: /api.php?action=deleteStudent
+2025-01-11 12:48:23 - Request: /api.php?action=getStudents
+2025-01-11 12:48:24 - Request: /api.php?action=getAvatar
+2025-01-11 12:48:24 - Request: /api.php?action=getStudents
+2025-01-11 12:48:57 - Request: /api.php?action=getAvatar
+2025-01-11 12:48:57 - Request: /api.php?action=getStudents
+2025-01-11 12:48:58 - Request: /api.php?action=getStudents
+2025-01-11 12:49:03 - Request: /api.php?action=getFaculties
+2025-01-11 12:49:53 - Request: /api.php?action=getAvatar
+2025-01-11 12:49:53 - Request: /api.php?action=getStudents
+2025-01-11 12:49:55 - Request: /api.php?action=getCourseList
+2025-01-11 12:49:55 - Getting course list
+2025-01-11 12:49:55 - Found 0 courses
+2025-01-11 12:49:57 - Request: /api.php?action=getFaculties
+2025-01-11 12:50:27 - Request: /api.php?action=getCourseList
+2025-01-11 12:50:27 - Getting course list
+2025-01-11 12:50:27 - Found 0 courses
+2025-01-11 12:50:28 - Request: /api.php?action=getCourseList
+2025-01-11 12:50:28 - Getting course list
+2025-01-11 12:50:28 - Found 0 courses
+2025-01-11 12:50:29 - Request: /api.php?action=getFaculties
+2025-01-11 12:50:42 - Request: /api.php?action=getFaculties
+2025-01-11 12:52:57 - Request: /api.php?action=getAvatar
+2025-01-11 12:52:57 - Request: /api.php?action=getStudents
+2025-01-11 12:52:58 - Request: /api.php?action=getFaculties
+2025-01-11 12:54:22 - Request: /api.php?action=deleteFaculty
+2025-01-11 12:54:23 - Request: /api.php?action=getFaculties
+2025-01-11 12:54:28 - Request: /api.php?action=deleteFaculty
+2025-01-11 12:54:28 - Request: /api.php?action=getFaculties
+2025-01-11 12:54:33 - Request: /api.php?action=deleteFaculty
+2025-01-11 12:54:34 - Request: /api.php?action=getFaculties
+2025-01-11 12:56:35 - Request: /api.php?action=addFaculty
+2025-01-11 12:56:35 - Error: Vui lòng điền đầy đủ thông tin
+2025-01-11 12:56:58 - Request: /api.php?action=addFaculty
+2025-01-11 12:56:58 - Error: Vui lòng điền đầy đủ thông tin
+2025-01-11 13:00:05 - Request: /api.php?action=getAvatar
+2025-01-11 13:00:05 - Request: /api.php?action=getStudents
+2025-01-11 13:00:06 - Request: /api.php?action=getAvatar
+2025-01-11 13:00:06 - Request: /api.php?action=getStudents
+2025-01-11 13:00:06 - Request: /api.php?action=getAvatar
+2025-01-11 13:00:06 - Request: /api.php?action=getStudents
+2025-01-11 13:00:07 - Request: /api.php?action=getFaculties
+2025-01-11 13:01:40 - Request: /api.php?action=getAvatar
+2025-01-11 13:01:40 - Request: /api.php?action=getStudents
+2025-01-11 13:01:42 - Request: /api.php?action=getFaculties
+2025-01-11 13:02:36 - Request: /api.php?action=getAvatar
+2025-01-11 13:02:36 - Request: /api.php?action=getStudents
+2025-01-11 13:02:36 - Request: /api.php?action=getAvatar
+2025-01-11 13:02:36 - Request: /api.php?action=getStudents
+2025-01-11 13:02:37 - Request: /api.php?action=getFaculties
+2025-01-11 13:07:18 - Request: /api.php?action=getAvatar
+2025-01-11 13:07:18 - Request: /api.php?action=getStudents
+2025-01-11 13:07:18 - Request: /api.php?action=getAvatar
+2025-01-11 13:07:18 - Request: /api.php?action=getStudents
+2025-01-11 13:07:19 - Request: /api.php?action=getFaculties
+2025-01-11 13:12:49 - Request: /api.php?action=getAvatar
+2025-01-11 13:12:49 - Request: /api.php?action=getStudents
+2025-01-11 13:12:49 - Request: /api.php?action=getAvatar
+2025-01-11 13:12:49 - Request: /api.php?action=getStudents
+2025-01-11 13:12:50 - Request: /api.php?action=getFaculties
+2025-01-11 13:13:56 - Request: /api.php?action=getAvatar
+2025-01-11 13:13:56 - Request: /api.php?action=getStudents
+2025-01-11 13:14:00 - Request: /api.php?action=getFaculties
+2025-01-11 13:16:02 - Request: /api.php?action=getAvatar
+2025-01-11 13:16:02 - Request: /api.php?action=getStudents
+2025-01-11 13:16:03 - Request: /api.php?action=getAvatar
+2025-01-11 13:16:03 - Request: /api.php?action=getStudents
+2025-01-11 13:16:03 - Request: /api.php?action=getAvatar
+2025-01-11 13:16:03 - Request: /api.php?action=getStudents
+2025-01-11 13:16:04 - Request: /api.php?action=getFaculties
+2025-01-11 13:16:12 - Request: /api.php?action=addFaculty
+2025-01-11 13:16:13 - Request: /api.php?action=getFaculties
+2025-01-11 13:16:34 - Request: /api.php?action=addFaculty
+2025-01-11 13:16:35 - Request: /api.php?action=getFaculties
+2025-01-11 13:19:54 - Request: /api.php?action=addFaculty
+2025-01-11 13:19:55 - Request: /api.php?action=getFaculties
+2025-01-11 13:20:25 - Request: /api.php?action=addFaculty
+2025-01-11 13:20:26 - Request: /api.php?action=getFaculties
+2025-01-11 13:23:46 - Request: /api.php?action=addFaculty
+2025-01-11 13:23:47 - Request: /api.php?action=getFaculties
+2025-01-11 13:26:59 - Request: /api.php?action=getCourseList
+2025-01-11 13:27:00 - Getting course list
+2025-01-11 13:27:00 - Found 0 courses
+2025-01-11 13:27:01 - Request: /api.php?action=getFaculties
+2025-01-11 13:27:15 - Request: /api.php?action=getFaculties
+2025-01-11 13:27:57 - Request: /api.php?action=addCourse
+2025-01-11 13:33:02 - Request: /api.php?action=getAvatar
+2025-01-11 13:33:02 - Request: /api.php?action=getStudents
+2025-01-11 13:33:04 - Request: /api.php?action=getCourses
+2025-01-11 13:33:04 - Request: /api.php?action=getCourses
+2025-01-11 13:33:09 - Request: /api.php?action=getFaculties
+2025-01-11 13:34:17 - Request: /api.php?action=addCourse
+2025-01-11 13:34:18 - Request: /api.php?action=getCourses
+2025-01-11 13:35:56 - Request: /api.php?action=getStudents
+2025-01-11 13:36:05 - Request: /api.php?action=getStudents
+2025-01-11 13:36:12 - Request: /api.php?action=getAvatar
+2025-01-11 13:36:13 - Request: /api.php?action=getFaculties
+2025-01-11 13:36:14 - Request: /api.php?action=getCourses
+2025-01-11 13:36:14 - Request: /api.php?action=getCourses
+2025-01-11 13:36:17 - Request: /api.php?action=getCourses
+2025-01-11 13:36:17 - Request: /api.php?action=getCourses
+2025-01-11 13:36:17 - Request: /api.php?action=getCourses
+2025-01-11 13:36:17 - Request: /api.php?action=getCourses
+2025-01-11 13:36:18 - Request: /api.php?action=getCourseList
+2025-01-11 13:36:18 - Getting course list
+2025-01-11 13:36:18 - Found 2 courses
+2025-01-11 13:36:23 - Request: /api.php?action=getCourses
+2025-01-11 13:36:23 - Request: /api.php?action=getCourses
+2025-01-11 13:36:26 - Request: /api.php?action=getStudents
+2025-01-11 13:36:26 - Request: /api.php?action=getStudents
+2025-01-11 13:36:27 - Request: /api.php?action=getStudents
+2025-01-11 13:36:27 - Request: /api.php?action=getStudents
+2025-01-11 13:36:28 - Request: /api.php?action=getStudents
+2025-01-11 13:36:28 - Request: /api.php?action=getStudents
+2025-01-11 13:36:29 - Request: /api.php?action=getAvatar
+2025-01-11 13:36:29 - Request: /api.php?action=getStudents
+2025-01-11 13:36:29 - Request: /api.php?action=getStudents
+2025-01-11 13:36:46 - Request: /api.php?action=getCourseList
+2025-01-11 13:36:46 - Getting course list
+2025-01-11 13:36:46 - Found 2 courses
+2025-01-11 13:40:13 - Request: /api.php?action=getStudents
+2025-01-11 13:40:14 - Request: /api.php?action=getCourses
+2025-01-11 13:40:14 - Request: /api.php?action=getCourses
+2025-01-11 13:40:15 - Request: /api.php?action=getCourseList
+2025-01-11 13:40:15 - Getting course list
+2025-01-11 13:40:15 - Found 2 courses
+2025-01-11 13:40:16 - Request: /api.php?action=getCourses
+2025-01-11 13:40:16 - Request: /api.php?action=getCourses
+2025-01-11 13:40:16 - Request: /api.php?action=getCourseList
+2025-01-11 13:40:16 - Getting course list
+2025-01-11 13:40:16 - Found 2 courses
+2025-01-11 13:40:17 - Request: /api.php?action=getCourses
+2025-01-11 13:40:17 - Request: /api.php?action=getCourses
+2025-01-11 13:40:18 - Request: /api.php?action=getStudents
+2025-01-11 13:40:19 - Request: /api.php?action=getCourses
+2025-01-11 13:40:19 - Request: /api.php?action=getCourses
+2025-01-11 13:40:19 - Request: /api.php?action=getCourseList
+2025-01-11 13:40:19 - Getting course list
+2025-01-11 13:40:19 - Found 2 courses
+2025-01-11 13:40:21 - Request: /api.php?action=getCourses
+2025-01-11 13:40:21 - Request: /api.php?action=getCourses
+2025-01-11 13:40:24 - Request: /api.php?action=getCourseList
+2025-01-11 13:40:24 - Getting course list
+2025-01-11 13:40:24 - Found 2 courses
+2025-01-11 13:42:19 - Request: /api.php?action=getCourseList
+2025-01-11 13:42:19 - Getting course list
+2025-01-11 13:42:19 - Found 2 courses
+2025-01-11 13:42:20 - Request: /api.php?action=getCourses
+2025-01-11 13:42:20 - Request: /api.php?action=getCourses
+2025-01-11 13:42:21 - Request: /api.php?action=getCourseList
+2025-01-11 13:42:21 - Getting course list
+2025-01-11 13:42:21 - Found 2 courses
+2025-01-11 13:44:27 - Request: /api.php?action=getAvatar
+2025-01-11 13:44:27 - Request: /api.php?action=getStudents
+2025-01-11 13:44:29 - Request: /api.php?action=getCourseList
+2025-01-11 13:44:29 - Getting course list
+2025-01-11 13:44:29 - Found 2 courses
+2025-01-11 13:44:32 - Request: /api.php?action=getCourses
+2025-01-11 13:44:32 - Request: /api.php?action=getCourses
+2025-01-11 13:44:32 - Request: /api.php?action=getCourses
+2025-01-11 13:44:32 - Request: /api.php?action=getCourses
+2025-01-11 13:44:33 - Request: /api.php?action=getCourses
+2025-01-11 13:44:33 - Request: /api.php?action=getCourses
+2025-01-11 13:44:35 - Request: /api.php?action=getRegisteredStudents&courseCode=CNTT
+2025-01-11 13:46:17 - Request: /api.php?action=getAvatar
+2025-01-11 13:46:17 - Request: /api.php?action=getStudents
+2025-01-11 13:46:18 - Request: /api.php?action=getCourses
+2025-01-11 13:46:18 - Request: /api.php?action=getCourses
+2025-01-11 13:46:19 - Request: /api.php?action=getRegisteredStudents&courseCode=CNTT
+2025-01-11 13:46:21 - Request: /api.php?action=getRegisteredStudents&courseCode=KT1
+2025-01-11 13:46:23 - Request: /api.php?action=getCourseList
+2025-01-11 13:46:23 - Getting course list
+2025-01-11 13:46:23 - Found 2 courses
+2025-01-11 13:46:25 - Request: /api.php?action=getCourses
+2025-01-11 13:46:25 - Request: /api.php?action=getCourses
+2025-01-11 13:46:27 - Request: /api.php?action=getCourses
+2025-01-11 13:46:27 - Request: /api.php?action=getCourses
+2025-01-11 13:46:29 - Request: /api.php?action=getCourseList
+2025-01-11 13:46:29 - Getting course list
+2025-01-11 13:46:29 - Found 2 courses
+2025-01-11 13:46:30 - Request: /api.php?action=getCourses
+2025-01-11 13:46:30 - Request: /api.php?action=getCourses
+2025-01-11 13:48:12 - Request: /api.php?action=getCourses
+2025-01-11 13:48:12 - Request: /api.php?action=getCourses
+2025-01-11 13:48:13 - Request: /api.php?action=getCourses
+2025-01-11 13:48:13 - Request: /api.php?action=getCourses
+2025-01-11 13:48:14 - Request: /api.php?action=getCourseList
+2025-01-11 13:48:14 - Getting course list
+2025-01-11 13:48:14 - Found 2 courses
+2025-01-11 13:51:37 - Request: /api.php?action=getAvatar
+2025-01-11 13:51:37 - Request: /api.php?action=getStudents
+2025-01-11 13:51:37 - Request: /api.php?action=getCourses
+2025-01-11 13:51:37 - Request: /api.php?action=getCourses
+2025-01-11 13:51:38 - Request: /api.php?action=getCourseList
+2025-01-11 13:51:38 - Getting course list
+2025-01-11 13:51:38 - Found 2 courses
+2025-01-11 13:51:40 - Request: /api.php?action=getCourses
+2025-01-11 13:51:40 - Request: /api.php?action=getCourses
+2025-01-11 13:51:41 - Request: /api.php?action=getRegisteredStudents&courseCode=CNTT
+2025-01-11 13:51:43 - Request: /api.php?action=getCourseList
+2025-01-11 13:51:43 - Getting course list
+2025-01-11 13:51:43 - Found 2 courses
+2025-01-11 13:51:44 - Request: /api.php?action=getCourses
+2025-01-11 13:51:44 - Request: /api.php?action=getCourses
+2025-01-11 13:51:46 - Request: /api.php?action=getCourseList
+2025-01-11 13:51:46 - Getting course list
+2025-01-11 13:51:46 - Found 2 courses
+2025-01-11 13:59:10 - Request: /api.php?action=getAvatar
+2025-01-11 13:59:10 - Request: /api.php?action=getStudents
+2025-01-11 14:25:15 - Request: /api.php?action=getAvatar
+2025-01-13 02:32:04 - Request: /api.php?action=getStudents
+2025-01-13 02:32:04 - Request: /api.php?action=getAvatar
+2025-01-13 02:32:11 - Request: /api.php?action=getStudents
+2025-01-13 02:32:15 - Request: /api.php?action=getCourseList
+2025-01-13 02:32:15 - Getting course list
+2025-01-13 02:32:15 - Found 2 courses
+2025-01-13 02:32:17 - Request: /api.php?action=getCourses
+2025-01-13 02:32:17 - Request: /api.php?action=getCourses
+2025-01-13 02:32:21 - Request: /api.php?action=getFaculties
+2025-01-13 02:33:03 - Request: /api.php?action=addCourse
+2025-01-13 02:33:03 - Error: Mã môn học đã tồn tại
+2025-01-13 02:33:07 - Request: /api.php?action=addCourse
+2025-01-13 02:33:08 - Request: /api.php?action=getCourses
+2025-01-13 06:56:26 - Request: /api.php?action=getAvatar
+2025-01-13 06:56:26 - Request: /api.php?action=getStudents

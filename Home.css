@@ -1828,10 +1828,9 @@ body.dark-mode {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 1001;
     width: 400px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-
 }
 
 .popup h2 {
@@ -1844,35 +1843,47 @@ body.dark-mode {
 .popup form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
 }
 
-.popup input {
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-group input {
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
 }
 
-.popup .button-group {
+.button-group {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
     margin-top: 20px;
 }
 
-.cancel-registration-button {
-    background-color: #dc3545;
-    color: white;
+.button-group button {
+    padding: 8px 16px;
     border: none;
-    padding: 5px 10px;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s;
 }
 
-.cancel-registration-button:hover {
-    background-color: #c82333;
+.button-group button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.button-group .close-btn {
+    background-color: #f44336;
+    color: white;
 }
 
 body.swal2-height-auto {
@@ -1983,4 +1994,62 @@ body.swal2-height-auto {
 
 .dark-mode .menu-toggle {
     color: #ffffff;
+}
+
+/* Styles cho bảng khoa */
+#faculty-table .button {
+    display: flex;
+    gap: 10px;
+}
+
+#faculty-table .button button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+#faculty-table .button button:hover {
+    background-color: #45a049;
+}
+
+/* Styles cho popup thêm khoa */
+.popup {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.popup form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popup label {
+    font-weight: bold;
+}
+
+.popup input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.popup .button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+#faculty-list tr.selected {
+    background-color: #e0e0e0;
+}
+
+.dark-mode #faculty-list tr.selected {
+    background-color: #404040;
 }

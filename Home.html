@@ -38,6 +38,15 @@
         <div class="menu-link collapsible" onclick="window.location.href='dulieu.php'">
             <span class="menu-text">Xuất/Nhập dữ liệu</span>
         </div>
+        <div class="menu-item">
+            <div class="menu-link collapsible">
+                <span class="menu-text">Quản lý khoa</span>
+                <span class="menu-toggle" style="color: rgb(0, 0, 0);">▼</span>
+            </div>
+            <ul class="submenu">
+                <li><a href="#" id="show-faculty-list">Danh sách khoa</a></li>
+            </ul>
+        </div>
     </div>
     <div class="profile-sidebar">
         <div class="profile-avatar">
@@ -150,7 +159,8 @@
                         <th>Tên môn học</th>
                         <th>Số tín chỉ</th>
                         <th>Giảng viên</th>
-                        <th>Số lượng</th>
+                        <th>Mã khoa</th>
+                        <th>Số lượng tối đa</th>
                     </tr>
                 </thead>
                 <tbody id="course-list">
@@ -197,6 +207,32 @@
                     </tr>
                 </thead>
                 <tbody id="registered-courses-list">
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Bảng danh sách khoa -->
+        <section class="table" id="faculty-table" style="display: none;">
+            <div class="button">
+                <div class="addFaculty">
+                    <button type="button" onclick="showAddFacultyPopup()">Thêm khoa</button>
+                </div>
+                <div class="EditFaculty">
+                    <button type="button" onclick="showEditFaculty()">Sửa khoa</button>
+                </div>
+                <div class="DeleteFaculty">
+                    <button type="button" onclick="showDeleteFacultyPopup()">Xóa khoa</button>
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã khoa</th>
+                        <th>Tên khoa</th>
+                    </tr>
+                </thead>
+                <tbody id="faculty-list">
                 </tbody>
             </table>
         </section>
@@ -273,9 +309,13 @@
             <input type="number" id="credits" required min="1" max="10">
             <label for="lecturer">Giảng viên:<span style="color: red">*</span></label>
             <input type="text" id="lecturer" required>
+            <label for="facultyCode">Mã khoa:<span style="color: red">*</span></label>
+            <select id="facultyCode" required>
+                <option value="">Chọn khoa</option>
+            </select>
             <label for="maxStudents">Số lượng tối đa:<span style="color: red">*</span></label>
             <input type="number" id="maxStudents" required min="1">
-            <div class="button-group-course">
+            <div class="button-group">
                 <button type="submit" id="save">Thêm</button>
                 <button type="button" class="close-btn" onclick="closeAddCoursePopup()">Đóng</button>
             </div>
@@ -338,6 +378,56 @@
         <div class="button-group">
             <button type="button" class="close-btn" onclick="closeStudentListPopup()">Đóng</button>
         </div>
+    </div>
+
+    <!-- Popup Thêm Khoa -->
+    <div id="overlayAddFaculty" class="overlay"></div>
+    <div id="addFacultyPopup" class="popup">
+        <form id="addFacultyForm">
+            <h2>Thêm khoa</h2>
+            <div class="form-group">
+                <label for="MaKhoa">Mã khoa:<span style="color: red">*</span></label>
+                <input type="text" id="MaKhoa" name="MaKhoa" required>
+            </div>
+            <div class="form-group">
+                <label for="TenKhoa">Tên khoa:<span style="color: red">*</span></label>
+                <input type="text" id="TenKhoa" name="TenKhoa" required>
+            </div>
+            <div class="button-group">
+                <button type="submit" id="saveFaculty">Thêm</button>
+                <button type="button" class="close-btn" onclick="closeAddFacultyPopup()">Đóng</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Popup Sửa Khoa -->
+    <div id="overlayEditFaculty" class="overlay"></div>
+    <div id="editFacultyPopup" class="popup">
+        <form id="editFacultyForm" onsubmit="editFaculty(event)">
+            <h2>Sửa khoa</h2>
+            <label for="editFacultyCode">Mã khoa:</label>
+            <input type="text" id="editFacultyCode" readonly>
+            <label for="editFacultyName">Tên khoa:<span style="color: red">*</span></label>
+            <input type="text" id="editFacultyName" required>
+            <div class="button-group">
+                <button type="submit" id="save">Lưu</button>
+                <button type="button" class="close-btn" onclick="closeEditFacultyPopup()">Đóng</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Popup Xóa Khoa -->
+    <div id="overlayDeleteFaculty" class="overlay"></div>
+    <div id="deleteFacultyPopup" class="popup">
+        <form id="deleteFacultyForm" onsubmit="deleteFaculty(event)">
+            <h2>Xóa khoa</h2>
+            <label for="deleteFacultyCode">Mã khoa:</label>
+            <input type="text" id="deleteFacultyCode" required>
+            <div class="button-group">
+                <button type="submit" id="save">Xóa</button>
+                <button type="button" class="close-btn" onclick="closeDeleteFacultyPopup()">Đóng</button>
+            </div>
+        </form>
     </div>
 
     <script src="Home.js"></script>

@@ -1,40 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Đăng nhập - Quản lí đăng kí sinh viên</title>
-  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link rel="stylesheet" href="Login.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QLSV</title>
+    <link rel="stylesheet" href="login.css" />
 </head>
 
 <body>
-  <div id="loginAccount">
-    <h1>Đăng nhập</h1>
-    <div class="login_box">
-      <form id="loginForm" class="login">
-        <div class="input-group">
-          <label for="username">&#x1F464; Nhập tài khoản:<span style="color: red">*</span></label>
-          <input type="text" placeholder="Tài khoản" name="username" id="username" required />
+    <div id="loginAccount">
+        <h1>Đăng nhập</h1>
+        <div class="login_box">
+            <form class="login" id="login_form" onsubmit="login(event)">
+                <label for="username">
+                    &#x1F464; Nhập tài khoản: <span style="color: red">*</span>
+                </label>
+                <input
+                    type="text"
+                    placeholder="Tài khoản"
+                    name="username"
+                    id="username"
+                    required />
+                <label for="password">
+                    &#x1F511; Nhập mật khẩu: <span style="color: red">*</span>
+                </label>
+                <input
+                    type="password"
+                    placeholder="Mật khẩu"
+                    name="password"
+                    id="password"
+                    required />
+                <button class="but" type="submit" id="btn_login">
+                    <b>Đăng nhập</b>
+                </button>
+                <a href="Register.html">
+                    <button type="button" id="btn_regis"><b>Đăng ký</b></button>
+                </a>
+                <div
+                    id="error"
+                    style="color: red; text-align: center; margin-top: 10px"></div>
+            </form>
         </div>
-        <div class="input-group password-container">
-          <label for="password">&#x1F511; Nhập mật khẩu:<span style="color: red">*</span></label>
-          <input type="password" placeholder="Mật khẩu" name="password" id="password" required />
-          <i class="fas fa-eye-slash toggle-password" onclick="togglePassword()"></i>
-        </div>
-        <button type="submit" id="loginBtn">
-          <b>Đăng nhập</b>
-        </button>
-        <a href="Register.html">
-          <button type="button" id="btn_regis"><b>Đăng ký</b></button>
-        </a>
-      </form>
     </div>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.js"></script>
-  <script src="Login.js"></script>
+    <script>
+        async function login(event) {
+            event.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const errorDiv = document.getElementById("error");
+
+            const formData = new FormData();
+            formData.append("username", username);
+            formData.append("password", password);
+
+            try {
+                const response = await fetch("login.php", {
+                    method: "POST",
+                    body: formData,
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    if (data.role === 'admin') {
+                        window.location.href = "Home.html";
+                    } else {
+                        window.location.href = "user.html";
+                    }
+                } else {
+                    errorDiv.textContent = data.message;
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                errorDiv.textContent = "Đã xảy ra lỗi!";
+            }
+        }
+    </script>
 </body>
 
 </html>

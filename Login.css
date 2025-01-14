@@ -12,14 +12,12 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
-
 h1 {
   text-align: center;
   margin: 0px 0px 30px 7px;
   color: #333;
   font-size: 50px;
 }
-
 #loginAccount {
   background-color: #ffffff;
   padding: 30px;
@@ -28,7 +26,6 @@ h1 {
   width: 100%;
   max-width: 400px;
 }
-
 input {
   width: 93%;
   height: 20px;
@@ -39,7 +36,6 @@ input {
   font-size: 16px;
   text-align: left;
 }
-
 button {
   width: 100%;
   padding: 10px;
@@ -51,40 +47,17 @@ button {
   cursor: pointer;
   margin-top: 10px;
 }
-
 button:hover {
   background-color: #0fb313;
 }
-
 a {
   padding: 0 5px;
   text-decoration: none;
   font-size: 16px;
 }
-
-#btn_regis {
+#btn_regis{
   position: relative;
   right: 5px;
   background-color: #ffffff;
   color: black;
-}
-
-.password-container {
-  position: relative;
-}
-
-.toggle-password {
-  position: absolute;
-  right: 25px;
-  top: 45px;
-  cursor: pointer;
-  color: #666;
-}
-
-.toggle-password:hover {
-  color: #333;
-}
-
-body.swal2-height-auto {
-  height: 100vh !important;
 }

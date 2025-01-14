@@ -182,6 +182,17 @@ try {
             break;
 
         case 'getCourses':
+            try {
+                $stmt = $conn->prepare("SELECT * FROM monhoc ORDER BY MaMH");
+                $stmt->execute();
+                $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                sendJsonResponse(true, $courses, '');
+            } catch (PDOException $e) {
+                sendJsonResponse(false, null, 'Lỗi khi tải danh sách tín chỉ: ' . $e->getMessage());
+            }
+            break;
+
         case 'getCourseList':
             file_put_contents('debug.log', date('Y-m-d H:i:s') . " - Getting course list\n", FILE_APPEND);
             $stmt = $conn->prepare("SELECT * FROM monhoc ORDER BY MaMH");
@@ -195,6 +206,17 @@ try {
         case 'registerCourse':
             if ($method !== 'POST') {
                 throw new Exception('Method not allowed');
+            }
+
+            // Kiểm tra profile đã hoàn thành chưa
+            $stmt = $conn->prepare("SELECT is_profile_completed FROM users WHERE id = ?");
+            $stmt->bind_param("i", $_SESSION['user_id']);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $user = $result->fetch_assoc();
+
+            if (!$user['is_profile_completed']) {
+                throw new Exception('Vui lòng cập nhật đầy đủ thông tin cá nhân trước khi đăng ký môn học');
             }
 
             $data = json_decode(file_get_contents('php://input'), true);
@@ -351,7 +373,7 @@ try {
             // Validate data
             if (empty($data['courseCode']) || empty($data['courseName']) || 
                 empty($data['credits']) || empty($data['lecturer']) || 
-                empty($data['maxStudents'])) {
+                empty($data['maxStudents']) || empty($data['facultyCode'])) {
                 throw new Exception('Vui lòng điền đầy đủ thông tin');
             }
 
@@ -362,15 +384,23 @@ try {
                 throw new Exception('Mã môn học đã tồn tại');
             }
 
+            // Check if faculty exists
+            $stmt = $conn->prepare("SELECT COUNT(*) FROM khoa WHERE MaKhoa = ?");
+            $stmt->execute([$data['facultyCode']]);
+            if ($stmt->fetchColumn() == 0) {
+                throw new Exception('Mã khoa không tồn tại');
+            }
+
             // Add new course
-            $sql = "INSERT INTO monhoc (MaMH, TenMH, SoTC, GiangVien, SoLuongMax) 
-                    VALUES (?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO monhoc (MaMH, TenMH, SoTC, GiangVien, MaKhoa, SoLuongMax) 
+                    VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             $result = $stmt->execute([
                 $data['courseCode'],
                 $data['courseName'],
                 $data['credits'],
                 $data['lecturer'],
+                $data['facultyCode'],
                 $data['maxStudents']
             ]);
 
@@ -468,53 +498,60 @@ try {
 
         case 'cancelRegistration':
             if ($method !== 'POST') {
-                throw new Exception('Method not allowed');
+                sendJsonResponse(false, null, 'Method not allowed');
+                break;
             }
 
             $data = json_decode(file_get_contents('php://input'), true);
             $studentId = $data['studentId'] ?? '';
-            $courseId = $data['courseId'] ?? '';
+            $courseCode = $data['courseCode'] ?? '';
 
-            if (empty($studentId) || empty($courseId)) {
-                throw new Exception('Thiếu thông tin cần thiết');
+            if (empty($studentId) || empty($courseCode)) {
+                sendJsonResponse(false, null, 'Thiếu thông tin cần thiết');
+                break;
             }
 
-            $conn->beginTransaction();
             try {
-                // Xóa đăng ký
-                $stmt = $conn->prepare("DELETE FROM dangkymonhoc WHERE MaSV = ? AND MaMH = ?");
-                $stmt->execute([$studentId, $courseId]);
-
-                // Giảm số lượng đăng ký trong bảng monhoc
-                $stmt = $conn->prepare("UPDATE monhoc SET SoLuongDaDangKy = SoLuongDaDangKy - 1 WHERE MaMH = ?");
-                $stmt->execute([$courseId]);
-
-                $conn->commit();
-                sendJsonResponse(true, null, 'Hủy đăng ký thành công');
-            } catch (Exception $e) {
-                $conn->rollBack();
-                throw new Exception('Không thể hủy đăng ký: ' . $e->getMessage());
+                $sql = "DELETE FROM dangkymonhoc WHERE MaSV = ? AND MaMH = ?";
+                $stmt = $conn->prepare($sql);
+                $result = $stmt->execute([$studentId, $courseCode]);
+                
+                if ($result) {
+                    // Cập nhật số lượng đã đăng ký trong bảng monhoc
+                    $updateSql = "UPDATE monhoc SET SoLuongDaDangKy = SoLuongDaDangKy - 1 WHERE MaMH = ?";
+                    $updateStmt = $conn->prepare($updateSql);
+                    $updateStmt->execute([$courseCode]);
+                    
+                    sendJsonResponse(true, null, 'Hủy đăng ký thành công');
+                } else {
+                    sendJsonResponse(false, null, 'Không thể hủy đăng ký');
+                }
+            } catch (PDOException $e) {
+                sendJsonResponse(false, null, 'Lỗi khi hủy đăng ký: ' . $e->getMessage());
             }
             break;
 
         case 'getRegisteredStudents':
-            $courseId = $_GET['courseId'] ?? '';
-            if (empty($courseId)) {
-                throw new Exception('Mã môn học không được để trống');
+            $courseCode = $_GET['courseCode'] ?? '';
+            if (empty($courseCode)) {
+                sendJsonResponse(false, null, 'Thiếu mã môn học');
+                break;
             }
-            
-            $stmt = $conn->prepare("
-                SELECT sv.MaSV, sv.HoTen, sv.Lop, dk.NgayDangKy 
-                FROM sinhvien sv 
-                JOIN dangkymonhoc dk ON sv.MaSV = dk.MaSV 
-                WHERE dk.MaMH = ?
-                ORDER BY dk.NgayDangKy DESC
-            ");
-            
-            $stmt->execute([$courseId]);
-            $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
-            sendJsonResponse(true, $students);
+
+            try {
+                $sql = "SELECT sv.MaSV, sv.HoTen, sv.Lop, dk.NgayDangKy as NgayDK 
+                        FROM sinhvien sv 
+                        JOIN dangkymonhoc dk ON sv.MaSV = dk.MaSV 
+                        WHERE dk.MaMH = ? 
+                        ORDER BY dk.NgayDangKy DESC";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute([$courseCode]);
+                $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                sendJsonResponse(true, $students, '');
+            } catch (PDOException $e) {
+                sendJsonResponse(false, null, 'Lỗi khi tải danh sách sinh viên: ' . $e->getMessage());
+            }
             break;
 
         case 'uploadAvatar':
@@ -569,6 +606,120 @@ try {
             session_start();
             $avatarUrl = $_SESSION['avatar'] ?? 'img/me.jpg'; // Đường dẫn ảnh mặc định
             sendJsonResponse(true, ['avatarUrl' => $avatarUrl]);
+            break;
+
+        case 'getFaculties':
+            $stmt = $conn->prepare("SELECT * FROM khoa ORDER BY MaKhoa");
+            $stmt->execute();
+            sendJsonResponse(true, $stmt->fetchAll(PDO::FETCH_ASSOC));
+            break;
+
+        case 'addFaculty':
+            if ($method !== 'POST') {
+                sendJsonResponse(false, null, 'Method not allowed');
+                break;
+            }
+
+            $input = json_decode(file_get_contents('php://input'), true);
+            
+            // Kiểm tra dữ liệu đầu vào
+            if (!isset($input['MaKhoa']) || !isset($input['TenKhoa'])) {
+                sendJsonResponse(false, null, 'Thiếu thông tin khoa');
+                break;
+            }
+
+            $maKhoa = trim($input['MaKhoa']);
+            $tenKhoa = trim($input['TenKhoa']);
+
+            // Kiểm tra dữ liệu trống
+            if (empty($maKhoa) || empty($tenKhoa)) {
+                sendJsonResponse(false, null, 'Vui lòng điền đầy đủ thông tin');
+                break;
+            }
+
+            try {
+                // Kiểm tra mã khoa đã tồn tại
+                $stmt = $conn->prepare("SELECT COUNT(*) FROM khoa WHERE MaKhoa = ?");
+                $stmt->execute([$maKhoa]);
+                if ($stmt->fetchColumn() > 0) {
+                    sendJsonResponse(false, null, 'Mã khoa đã tồn tại');
+                    break;
+                }
+
+                // Thêm khoa mới
+                $stmt = $conn->prepare("INSERT INTO khoa (MaKhoa, TenKhoa) VALUES (?, ?)");
+                $result = $stmt->execute([$maKhoa, $tenKhoa]);
+
+                if ($result) {
+                    sendJsonResponse(true, null, 'Thêm khoa thành công');
+                } else {
+                    sendJsonResponse(false, null, 'Không thể thêm khoa');
+                }
+            } catch (PDOException $e) {
+                sendJsonResponse(false, null, 'Lỗi database: ' . $e->getMessage());
+            }
+            break;
+
+        case 'editFaculty':
+            if ($method !== 'POST') {
+                throw new Exception('Method not allowed');
+            }
+
+            $data = json_decode(file_get_contents('php://input'), true);
+            
+            if (empty($data['facultyCode']) || empty($data['facultyName'])) {
+                throw new Exception('Vui lòng điền đầy đủ thông tin');
+            }
+
+            // Kiểm tra xem khoa có tồn tại không
+            $stmt = $conn->prepare("SELECT COUNT(*) FROM khoa WHERE MaKhoa = ?");
+            $stmt->execute([$data['facultyCode']]);
+            if ($stmt->fetchColumn() == 0) {
+                throw new Exception('Không tìm thấy khoa');
+            }
+
+            // Cập nhật thông tin khoa
+            $sql = "UPDATE khoa SET TenKhoa = ? WHERE MaKhoa = ?";
+            $stmt = $conn->prepare($sql);
+            $result = $stmt->execute([
+                $data['facultyName'],
+                $data['facultyCode']
+            ]);
+
+            sendJsonResponse($result, null, $result ? 'Cập nhật thông tin khoa thành công' : 'Không thể cập nhật thông tin khoa');
+            break;
+
+        case 'deleteFaculty':
+            if ($method !== 'POST') {
+                throw new Exception('Method not allowed');
+            }
+
+            $data = json_decode(file_get_contents('php://input'), true);
+            $facultyCode = $data['facultyCode'] ?? '';
+
+            if (empty($facultyCode)) {
+                throw new Exception('Mã khoa không được để trống');
+            }
+
+            // Kiểm tra xem có sinh viên nào thuộc khoa này không
+            $stmt = $conn->prepare("SELECT COUNT(*) FROM sinhvien WHERE Khoa = ?");
+            $stmt->execute([$facultyCode]);
+            if ($stmt->fetchColumn() > 0) {
+                throw new Exception('Không thể xóa khoa đã có sinh viên');
+            }
+
+            // Kiểm tra xem có môn học nào thuộc khoa này không
+            $stmt = $conn->prepare("SELECT COUNT(*) FROM monhoc WHERE MaKhoa = ?");
+            $stmt->execute([$facultyCode]);
+            if ($stmt->fetchColumn() > 0) {
+                throw new Exception('Không thể xóa khoa đã có môn học');
+            }
+
+            // Xóa khoa
+            $stmt = $conn->prepare("DELETE FROM khoa WHERE MaKhoa = ?");
+            $result = $stmt->execute([$facultyCode]);
+
+            sendJsonResponse($result, null, $result ? 'Xóa khoa thành công' : 'Không thể xóa khoa');
             break;
 
         default:

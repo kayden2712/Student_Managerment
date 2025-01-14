@@ -518,82 +518,49 @@ function getStatusText(status) {
 
 // Hàm hiển thị danh sách tín chỉ
 function showCourseList() {
-    console.log("Showing course list");
+    document.getElementById('Find').style.display = 'none';
     document.getElementById('header2').textContent = 'Danh Sách Tín Chỉ';
     hideAllTables();
     document.getElementById('course-list-table').style.display = 'block';
-    loadCourseList();
+    document.querySelector('.button').style.display = 'flex';
+    loadCourses();
 }
 
-// Hàm ẩn tất cả các section
-function hideAllSections() {
-    const sections = [
-        'student-table',
-        'credit-registration-table',
-        'registered-courses-table',
-        'course-list-table',
-        'Find'
-    ];
-
-    sections.forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.style.display = 'none';
-        }
-    });
-
-    // Ẩn nút
-    const buttonContainer = document.querySelector('.button');
-    if (buttonContainer) {
-        buttonContainer.style.display = 'none';
-    }
-}
-
-// Hàm ẩn tất cả các bảng
-function hideAllTables() {
-    // Danh sách tất cả các bảng cần ẩn
-    const tables = [
-        'student-table',
-        'course-list-table',
-        'credit-registration-table',
-        'registered-courses-table'
-    ];
-
-    // Ẩn tất cả các bảng
-    tables.forEach(tableId => {
-        const table = document.getElementById(tableId);
-        if (table) {
-            table.style.display = 'none';
-        }
-    });
-}
-
-// Hàm load dữ liệu
-function loadCourseList() {
-    console.log("Loading course list");
-    fetch('api.php?action=getCourseList')
-        .then(response => {
-            console.log("Raw response:", response);
-            return response.text();
-        })
-        .then(text => {
-            console.log("Response text:", text);
-            try {
-                return JSON.parse(text);
-            } catch (e) {
-                console.error("JSON parse error:", e);
-                throw new Error('Invalid JSON response');
+// Hàm load danh sách tín chỉ
+function loadCourses() {
+    fetch('api.php?action=getCourses')
+        .then(response => response.json())
+        .then(result => {
+            if (!result.success) {
+                throw new Error(result.message || 'Không thể tải danh sách tín chỉ');
             }
-        })
-        .then(data => {
-            console.log("Parsed data:", data);
-            if (!data.success) {
-                throw new Error(data.message || 'Unknown error');
+
+            const tbody = document.getElementById('course-list');
+            tbody.innerHTML = '';
+
+            if (!result.data || result.data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">Không có tín chỉ nào</td></tr>';
+                return;
             }
-            displayCourseList(data.data);
+
+            result.data.forEach((course, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td style="text-align: center;">${index + 1}</td>
+                    <td style="text-align: center;">
+                        <a href="#" class="course-code" data-course="${course.MaMH}" onclick="showRegisteredStudents('${course.MaMH}', '${course.TenMH}')">${course.MaMH}</a>
+                    </td>
+                    <td>${course.TenMH}</td>
+                    <td style="text-align: center;">${course.SoTC}</td>
+                    <td>${course.GiangVien}</td>
+                    <td style="text-align: center;">${course.MaKhoa}</td>
+                    <td style="text-align: center;">${course.SoLuongMax}</td>
+                `;
+                tbody.appendChild(row);
+            });
         })
         .catch(error => {
-            console.error("Error:", error);
+            console.error('Error:', error);
             Swal.fire({
                 title: 'Lỗi',
                 text: error.message,
@@ -602,22 +569,22 @@ function loadCourseList() {
         });
 }
 
-// Hàm hiển thị danh sách môn học
-function displayCourseList(courses) {
-    const tbody = document.getElementById('course-list');
-    tbody.innerHTML = '';
+// Thêm event listener cho link danh sách tín chỉ
+document.addEventListener('DOMContentLoaded', function() {
+    const courseListLink = document.querySelector('#show-course-list');
+    if (courseListLink) {
+        courseListLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showCourseList();
+        });
+    }
+});
 
-    courses.forEach((course, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td><a href="#" class="course-code" onclick="showRegisteredStudents('${course.MaMH}')">${course.MaMH}</a></td>
-            <td>${course.TenMH}</td>
-            <td>${course.SoTC}</td>
-            <td>${course.GiangVien}</td>
-            <td>${course.SoLuongDaDangKy}/${course.SoLuongMax}</td>
-        `;
-        tbody.appendChild(row);
+// Hàm ẩn tất cả các bảng
+function hideAllTables() {
+    const tables = document.querySelectorAll('.table');
+    tables.forEach(table => {
+        table.style.display = 'none';
     });
 }
 
@@ -665,7 +632,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
-
 // Hàm hiển thị đăng ký tín chỉ
 function showCreditRegistration() {
     document.getElementById('header2').textContent = 'Đăng Ký Tín Chỉ';
@@ -824,6 +790,7 @@ function cancelCourseRegistration(courseId) {
 function showAddCoursePopup() {
     document.getElementById('overlayAddCourse').style.display = 'block';
     document.getElementById('addCoursePopup').style.display = 'block';
+    loadFacultySelect(); // Load danh sách khoa khi mở popup
 }
 
 // Đóng popup thêm tín chỉ
@@ -842,8 +809,18 @@ function addCourse(event) {
         courseName: document.getElementById('courseName').value,
         credits: document.getElementById('credits').value,
         lecturer: document.getElementById('lecturer').value,
+        facultyCode: document.getElementById('facultyCode').value,
         maxStudents: document.getElementById('maxStudents').value
     };
+
+    if (!data.facultyCode) {
+        Swal.fire({
+            title: 'Lỗi',
+            text: 'Vui lòng chọn khoa',
+            icon: 'error'
+        });
+        return;
+    }
 
     fetch('api.php?action=addCourse', {
         method: 'POST',
@@ -859,7 +836,7 @@ function addCourse(event) {
                     icon: 'success'
                 }).then(() => {
                     closeAddCoursePopup();
-                    loadCourseList();
+                    loadCourses();
                 });
             } else {
                 throw new Error(result.message);
@@ -1331,17 +1308,98 @@ function cancelRegistration(studentId, courseId) {
     });
 }
 
-// Thêm hàm đóng popup danh sách sinh viên
+// Thêm hàm đóng popup
 function closeStudentListPopup() {
-    const popup = document.getElementById('studentListPopup');
-    if (popup) {
-        popup.style.display = 'none';
-    }
+    document.getElementById('studentListPopup').style.display = 'none';
 }
 
-// Hàm đăng xuất
-function logout() {
-    window.location.href = 'Login.html';
+// Thêm hàm hủy đăng ký
+function cancelRegistration(studentId, courseCode) {
+    Swal.fire({
+        title: 'Xác nhận',
+        text: 'Bạn có chắc chắn muốn hủy đăng ký này?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Đồng ý',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch('api.php?action=cancelRegistration', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    studentId: studentId,
+                    courseCode: courseCode
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        title: 'Thành công',
+                        text: 'Đã hủy đăng ký thành công',
+                        icon: 'success'
+                    }).then(() => {
+                        showRegisteredStudents(courseCode);
+                    });
+                } else {
+                    throw new Error(data.message);
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    title: 'Lỗi',
+                    text: error.message,
+                    icon: 'error'
+                });
+            });
+        }
+    });
+}
+
+// Thêm hàm hiển thị danh sách sinh viên đăng ký
+function showRegisteredStudents(courseCode, courseName) {
+    fetch(`api.php?action=getRegisteredStudents&courseCode=${courseCode}`)
+        .then(response => response.json())
+        .then(result => {
+            if (!result.success) {
+                throw new Error(result.message);
+            }
+
+            document.getElementById('courseTitle').textContent = `${courseCode} - ${courseName}`;
+            const tbody = document.getElementById('registeredStudentsList');
+            tbody.innerHTML = '';
+
+            if (!result.data || result.data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Chưa có sinh viên đăng ký</td></tr>';
+            } else {
+                result.data.forEach((student, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td style="text-align: center;">${index + 1}</td>
+                        <td style="text-align: center;">${student.MaSV}</td>
+                        <td>${student.HoTen}</td>
+                        <td>${student.Lop}</td>
+                        <td style="text-align: center;">${student.NgayDK}</td>
+                        <td style="text-align: center;">
+                            <button onclick="cancelRegistration('${student.MaSV}', '${courseCode}')" class="cancel-btn">Hủy đăng ký</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            document.getElementById('studentListPopup').style.display = 'block';
+        })
+        .catch(error => {
+            Swal.fire({
+                title: 'Lỗi',
+                text: error.message,
+                icon: 'error'
+            });
+        });
 }
 
 // Thêm event listener cho việc chọn ảnh
@@ -1406,4 +1464,379 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 function hideButton() {
     document.querySelector('.button').style.display = 'none';
+}
+function logout(){
+    if(confirm("Bạn có chắc chắn muốn đăng xuất?")){
+        window.location.href = 'Login.html';
+    }
+}
+
+// Hiển thị danh sách khoa
+function showFacultyList() {
+    document.getElementById('header2').textContent = 'Danh Sách Khoa';
+    hideAllTables();
+    document.getElementById('faculty-table').style.display = 'block';
+    loadFacultyList();
+}
+
+// Load danh sách khoa
+function loadFacultyList() {
+    fetch('api.php?action=getFaculties')
+        .then(response => response.json())
+        .then(result => {
+            if (!result.success) {
+                throw new Error(result.message || 'Không thể tải danh sách khoa');
+            }
+
+            const tbody = document.getElementById('faculty-list');
+            tbody.innerHTML = '';
+
+            result.data.forEach((faculty, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${faculty.MaKhoa}</td>
+                    <td>${faculty.TenKhoa}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Lỗi!',
+                text: error.message,
+                icon: 'error'
+            });
+        });
+}
+
+// Hàm hiển thị popup thêm khoa
+function showAddFacultyPopup() {
+    console.log('Showing popup'); // Debug log
+    const overlay = document.getElementById('overlayAddFaculty');
+    const popup = document.getElementById('addFacultyPopup');
+    
+    if (!overlay || !popup) {
+        console.error('Overlay or popup not found');
+        return;
+    }
+    
+    overlay.style.display = 'block';
+    popup.style.display = 'block';
+}
+
+// Hàm đóng popup thêm khoa
+function closeAddFacultyPopup() {
+    const overlay = document.getElementById('overlayAddFaculty');
+    const popup = document.getElementById('addFacultyPopup');
+    const form = document.getElementById('addFacultyForm');
+    
+    if (overlay) overlay.style.display = 'none';
+    if (popup) popup.style.display = 'none';
+    if (form) form.reset();
+}
+
+// Hàm thêm khoa
+function addFaculty(event) {
+    event.preventDefault();
+    console.log('Form submitted'); // Debug log
+
+    const maKhoa = document.getElementById('MaKhoa').value.trim();
+    const tenKhoa = document.getElementById('TenKhoa').value.trim();
+
+    console.log('MaKhoa:', maKhoa); // Debug log
+    console.log('TenKhoa:', tenKhoa); // Debug log
+
+    if (!maKhoa) {
+        Swal.fire({
+            title: 'Lỗi',
+            text: 'Vui lòng nhập mã khoa',
+            icon: 'error'
+        });
+        return;
+    }
+
+    if (!tenKhoa) {
+        Swal.fire({
+            title: 'Lỗi',
+            text: 'Vui lòng nhập tên khoa',
+            icon: 'error'
+        });
+        return;
+    }
+
+    fetch('api.php?action=addFaculty', {
+        method: 'POST',
+        body: JSON.stringify({
+            MaKhoa: maKhoa,
+            TenKhoa: tenKhoa
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire({
+                title: 'Thành công',
+                text: 'Thêm khoa thành công',
+                icon: 'success'
+            }).then(() => {
+                closeAddFacultyPopup();
+                loadFacultyList();
+            });
+        } else {
+            throw new Error(data.message);
+        }
+    })
+    .catch(error => {
+        Swal.fire({
+            title: 'Lỗi',
+            text: error.message || 'Có lỗi xảy ra khi thêm khoa',
+            icon: 'error'
+        });
+    });
+}
+
+// Thêm event listeners khi trang được load
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded'); // Debug log
+    
+    // Event listener cho form submit
+    const addFacultyForm = document.getElementById('addFacultyForm');
+    if (addFacultyForm) {
+        console.log('Form found'); // Debug log
+        addFacultyForm.addEventListener('submit', addFaculty);
+    } else {
+        console.error('Form not found');
+    }
+});
+
+// Thêm event listener khi trang được load
+document.addEventListener('DOMContentLoaded', function() {
+    const facultyListLink = document.querySelector('#show-faculty-list');
+    if (facultyListLink) {
+        facultyListLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showFacultyList();
+        });
+    }
+});
+
+// Hàm load danh sách khoa vào select
+function loadFacultySelect() {
+    fetch('api.php?action=getFaculties')
+        .then(response => response.json())
+        .then(result => {
+            if (!result.success) {
+                throw new Error(result.message || 'Không thể tải danh sách khoa');
+            }
+
+            const select = document.getElementById('facultyCode');
+            select.innerHTML = '<option value="">Chọn khoa</option>';
+
+            result.data.forEach(faculty => {
+                const option = document.createElement('option');
+                option.value = faculty.MaKhoa;
+                option.textContent = `${faculty.MaKhoa} - ${faculty.TenKhoa}`;
+                select.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Lỗi!',
+                text: error.message,
+                icon: 'error'
+            });
+        });
+}
+
+// Hiển thị popup sửa khoa
+function showEditFaculty() {
+    const selectedRow = document.querySelector('#faculty-list tr.selected');
+    if (!selectedRow) {
+        Swal.fire({
+            title: 'Thông báo',
+            text: 'Vui lòng chọn khoa cần sửa',
+            icon: 'warning'
+        });
+        return;
+    }
+
+    const facultyCode = selectedRow.cells[1].textContent;
+    const facultyName = selectedRow.cells[2].textContent;
+
+    document.getElementById('editFacultyCode').value = facultyCode;
+    document.getElementById('editFacultyName').value = facultyName;
+
+    document.getElementById('overlayEditFaculty').style.display = 'block';
+    document.getElementById('editFacultyPopup').style.display = 'block';
+}
+
+// Đóng popup sửa khoa
+function closeEditFacultyPopup() {
+    document.getElementById('overlayEditFaculty').style.display = 'none';
+    document.getElementById('editFacultyPopup').style.display = 'none';
+    document.getElementById('editFacultyForm').reset();
+}
+
+// Sửa thông tin khoa
+function editFaculty(event) {
+    event.preventDefault();
+
+    const data = {
+        facultyCode: document.getElementById('editFacultyCode').value,
+        facultyName: document.getElementById('editFacultyName').value
+    };
+
+    fetch('api.php?action=editFaculty', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                Swal.fire({
+                    title: 'Thành công',
+                    text: 'Cập nhật thông tin khoa thành công',
+                    icon: 'success'
+                }).then(() => {
+                    closeEditFacultyPopup();
+                    loadFacultyList();
+                });
+            } else {
+                throw new Error(result.message);
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                title: 'Lỗi',
+                text: error.message,
+                icon: 'error'
+            });
+        });
+}
+
+// Hiển thị popup xóa khoa
+function showDeleteFacultyPopup() {
+    const selectedRow = document.querySelector('#faculty-list tr.selected');
+    if (!selectedRow) {
+        Swal.fire({
+            title: 'Thông báo',
+            text: 'Vui lòng chọn khoa cần xóa',
+            icon: 'warning'
+        });
+        return;
+    }
+
+    document.getElementById('deleteFacultyCode').value = selectedRow.cells[1].textContent;
+    document.getElementById('overlayDeleteFaculty').style.display = 'block';
+    document.getElementById('deleteFacultyPopup').style.display = 'block';
+}
+
+// Đóng popup xóa khoa
+function closeDeleteFacultyPopup() {
+    document.getElementById('overlayDeleteFaculty').style.display = 'none';
+    document.getElementById('deleteFacultyPopup').style.display = 'none';
+    document.getElementById('deleteFacultyForm').reset();
+}
+
+// Xóa khoa
+function deleteFaculty(event) {
+    event.preventDefault();
+
+    const facultyCode = document.getElementById('deleteFacultyCode').value;
+
+    Swal.fire({
+        title: 'Xác nhận xóa',
+        text: 'Bạn có chắc chắn muốn xóa khoa này?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Xóa',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch('api.php?action=deleteFaculty', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ facultyCode: facultyCode })
+            })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        Swal.fire({
+                            title: 'Thành công',
+                            text: 'Xóa khoa thành công',
+                            icon: 'success'
+                        }).then(() => {
+                            closeDeleteFacultyPopup();
+                            loadFacultyList();
+                        });
+                    } else {
+                        throw new Error(result.message);
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        title: 'Lỗi',
+                        text: error.message,
+                        icon: 'error'
+                    });
+                });
+        }
+    });
+}
+
+// Thêm sự kiện click cho các hàng trong bảng khoa
+function addFacultyTableRowClickHandler() {
+    const rows = document.querySelectorAll('#faculty-list tr');
+    rows.forEach(row => {
+        row.addEventListener('click', function() {
+            // Bỏ chọn hàng cũ
+            const selectedRow = document.querySelector('#faculty-list tr.selected');
+            if (selectedRow) {
+                selectedRow.classList.remove('selected');
+            }
+            // Chọn hàng mới
+            this.classList.add('selected');
+        });
+    });
+}
+
+// Cập nhật hàm loadFacultyList để thêm click handler
+function loadFacultyList() {
+    fetch('api.php?action=getFaculties')
+        .then(response => response.json())
+        .then(result => {
+            if (!result.success) {
+                throw new Error(result.message || 'Không thể tải danh sách khoa');
+            }
+
+            const tbody = document.getElementById('faculty-list');
+            tbody.innerHTML = '';
+
+            result.data.forEach((faculty, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${faculty.MaKhoa}</td>
+                    <td>${faculty.TenKhoa}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            addFacultyTableRowClickHandler();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Lỗi!',
+                text: error.message,
+                icon: 'error'
+            });
+        });
 }
