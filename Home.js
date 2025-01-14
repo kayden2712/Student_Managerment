@@ -321,7 +321,7 @@ function deleteStudent(event) {
                     } else {
                         Swal.fire({
                             title: "Thông báo!",
-                            text: "Sinh viên đã đăng ký tín chỉ, không thể xóa!",
+                            text: "Sinh viên không tồn tại",
                             icon: "error",
                             button: "Ok",
                         });

@@ -13,12 +13,14 @@ $username = 'root';
 $password = '';
 
 // Helper functions
-function validateDate($date, $format = 'Y-m-d') {
+function validateDate($date, $format = 'Y-m-d')
+{
     $d = DateTime::createFromFormat($format, $date);
     return $d && $d->format($format) === $date;
 }
 
-function sendJsonResponse($success, $data = null, $message = '') {
+function sendJsonResponse($success, $data = null, $message = '')
+{
     echo json_encode([
         'success' => $success,
         'data' => $data,
@@ -48,7 +50,7 @@ try {
                 sendJsonResponse(true, [], 'Vui lòng nhập từ khóa tìm kiếm');
                 break;
             }
-            
+
             // Cải thiện câu truy vấn SQL để tìm kiếm chính xác hơn
             $sql = "SELECT * FROM sinhvien 
                     WHERE MaSV LIKE :exactMatch 
@@ -67,20 +69,20 @@ try {
                         END,
                         MaSV ASC,
                         HoTen ASC";
-            
+
             $stmt = $conn->prepare($sql);
-            
+
             // Bind các tham số tìm kiếm
             $stmt->bindValue(':exactMatch', $keyword, PDO::PARAM_STR);
             $stmt->bindValue(':keyword', "%$keyword%", PDO::PARAM_STR);
             $stmt->bindValue(':startsWith', "$keyword%", PDO::PARAM_STR);
-            
+
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
+
             sendJsonResponse(
-                true, 
-                $results, 
+                true,
+                $results,
                 empty($results) ? 'Không tìm thấy sinh viên nào' : null
             );
             break;
@@ -91,7 +93,7 @@ try {
             }
 
             $data = json_decode(file_get_contents('php://input'), true);
-            
+
             // Validate data
             $maSV = isset($data['code']) ? trim($data['code']) : '';
             $hoTen = isset($data['name']) ? trim($data['name']) : '';
@@ -132,9 +134,11 @@ try {
             }
 
             $data = json_decode(file_get_contents('php://input'), true);
-            
-            if (!isset($data['code']) || !isset($data['name']) || !isset($data['birthDay']) 
-                || !isset($data['classs']) || !isset($data['fos'])) {
+
+            if (
+                !isset($data['code']) || !isset($data['name']) || !isset($data['birthDay'])
+                || !isset($data['classs']) || !isset($data['fos'])
+            ) {
                 throw new Exception('Thiếu thông tin cần thiết');
             }
 
@@ -144,7 +148,7 @@ try {
                         Lop = :classs, 
                         Khoa = :fos 
                     WHERE MaSV = :code";
-            
+
             $stmt = $conn->prepare($sql);
             $success = $stmt->execute([
                 ':name' => $data['name'],
@@ -164,7 +168,7 @@ try {
 
             $data = json_decode(file_get_contents('php://input'), true);
             $studentId = trim($data['studentId'] ?? '');
-            
+
             if (empty($studentId)) {
                 throw new Exception('Mã sinh viên không được để trống');
             }
@@ -186,7 +190,7 @@ try {
                 $stmt = $conn->prepare("SELECT * FROM monhoc ORDER BY MaMH");
                 $stmt->execute();
                 $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                
+
                 sendJsonResponse(true, $courses, '');
             } catch (PDOException $e) {
                 sendJsonResponse(false, null, 'Lỗi khi tải danh sách tín chỉ: ' . $e->getMessage());
@@ -230,7 +234,7 @@ try {
 
             try {
                 $conn->beginTransaction();
-                
+
                 $successCourses = [];
                 $errorCourses = [];
 
@@ -242,7 +246,7 @@ try {
                 }
 
                 $placeholders = str_repeat('?,', count($courseIds) - 1) . '?';
-                
+
                 // Kiểm tra môn học đã đăng ký
                 $checkRegistered = $conn->prepare("
                     SELECT MaMH 
@@ -262,7 +266,7 @@ try {
                 ");
                 $checkCourses->execute($courseIds);
                 $courseStatus = [];
-                
+
                 while ($course = $checkCourses->fetch(PDO::FETCH_ASSOC)) {
                     $courseStatus[$course['MaMH']] = $course;
                 }
@@ -273,12 +277,12 @@ try {
                         $errorCourses[] = ["courseId" => $courseId, "reason" => "Đã đăng ký trước đó"];
                         continue;
                     }
-                    
+
                     if (!isset($courseStatus[$courseId])) {
                         $errorCourses[] = ["courseId" => $courseId, "reason" => "Môn học không tồn tại"];
                         continue;
                     }
-                    
+
                     if ($courseStatus[$courseId]['SoLuongDaDangKy'] >= $courseStatus[$courseId]['SoLuongMax']) {
                         $errorCourses[] = ["courseId" => $courseId, "reason" => "Lớp đã đầy"];
                         continue;
@@ -333,7 +337,6 @@ try {
                     ],
                     implode("\n", $messages)
                 );
-
             } catch (Exception $e) {
                 if (isset($conn) && $conn->inTransaction()) {
                     $conn->rollBack();
@@ -347,12 +350,12 @@ try {
             if (empty($studentId)) {
                 throw new Exception('Missing student ID');
             }
-            
+
             $sql = "SELECT m.*, dk.NgayDangKy 
                     FROM dangkymonhoc dk 
                     JOIN monhoc m ON dk.MaMH = m.MaMH 
                     WHERE dk.MaSV = :studentId";
-            
+
             $stmt = $conn->prepare($sql);
             $stmt->execute([':studentId' => $studentId]);
             sendJsonResponse(true, $stmt->fetchAll(PDO::FETCH_ASSOC));
@@ -364,11 +367,13 @@ try {
             }
 
             $data = json_decode(file_get_contents('php://input'), true);
-            
+
             // Validate data
-            if (empty($data['courseCode']) || empty($data['courseName']) || 
-                empty($data['credits']) || empty($data['lecturer']) || 
-                empty($data['maxStudents']) || empty($data['facultyCode'])) {
+            if (
+                empty($data['courseCode']) || empty($data['courseName']) ||
+                empty($data['credits']) || empty($data['lecturer']) ||
+                empty($data['maxStudents']) || empty($data['facultyCode'])
+            ) {
                 throw new Exception('Vui lòng điền đầy đủ thông tin');
             }
 
@@ -408,11 +413,13 @@ try {
             }
 
             $data = json_decode(file_get_contents('php://input'), true);
-            
+
             // Validate data
-            if (empty($data['courseCode']) || empty($data['courseName']) || 
-                empty($data['credits']) || empty($data['lecturer']) || 
-                empty($data['maxStudents'])) {
+            if (
+                empty($data['courseCode']) || empty($data['courseName']) ||
+                empty($data['credits']) || empty($data['lecturer']) ||
+                empty($data['maxStudents'])
+            ) {
                 throw new Exception('Vui lòng điền đầy đủ thông tin');
             }
 
@@ -465,7 +472,7 @@ try {
                     $checkRegistration = $conn->prepare("SELECT COUNT(*) FROM dangkymonhoc WHERE MaMH = ?");
                     $checkRegistration->execute([$courseCode]);
                     $registrationCount = $checkRegistration->fetchColumn();
-                    
+
                     // Log số lượng đăng ký thực tế
                     file_put_contents('debug.log', date('Y-m-d H:i:s') . " - Actual registrations in dangkymonhoc: " . $registrationCount . "\n", FILE_APPEND);
 
@@ -484,7 +491,6 @@ try {
                 } else {
                     throw new Exception('Không thể xóa tín chỉ');
                 }
-
             } catch (Exception $e) {
                 file_put_contents('debug.log', date('Y-m-d H:i:s') . " - Error deleting course: " . $e->getMessage() . "\n", FILE_APPEND);
                 throw $e;
@@ -510,13 +516,13 @@ try {
                 $sql = "DELETE FROM dangkymonhoc WHERE MaSV = ? AND MaMH = ?";
                 $stmt = $conn->prepare($sql);
                 $result = $stmt->execute([$studentId, $courseCode]);
-                
+
                 if ($result) {
                     // Cập nhật số lượng đã đăng ký trong bảng monhoc
                     $updateSql = "UPDATE monhoc SET SoLuongDaDangKy = SoLuongDaDangKy - 1 WHERE MaMH = ?";
                     $updateStmt = $conn->prepare($updateSql);
                     $updateStmt->execute([$courseCode]);
-                    
+
                     sendJsonResponse(true, null, 'Hủy đăng ký thành công');
                 } else {
                     sendJsonResponse(false, null, 'Không thể hủy đăng ký');
@@ -542,7 +548,7 @@ try {
                 $stmt = $conn->prepare($sql);
                 $stmt->execute([$courseCode]);
                 $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                
+
                 sendJsonResponse(true, $students, '');
             } catch (PDOException $e) {
                 sendJsonResponse(false, null, 'Lỗi khi tải danh sách sinh viên: ' . $e->getMessage());
@@ -590,7 +596,7 @@ try {
                 // Lưu đường dẫn ảnh vào session hoặc database
                 session_start();
                 $_SESSION['avatar'] = $uploadPath;
-                
+
                 sendJsonResponse(true, ['avatarUrl' => $uploadPath], 'Upload ảnh thành công');
             } else {
                 throw new Exception('Không thể lưu file ảnh');
@@ -616,7 +622,7 @@ try {
             }
 
             $input = json_decode(file_get_contents('php://input'), true);
-            
+
             // Kiểm tra dữ liệu đầu vào
             if (!isset($input['MaKhoa']) || !isset($input['TenKhoa'])) {
                 sendJsonResponse(false, null, 'Thiếu thông tin khoa');
@@ -661,7 +667,7 @@ try {
             }
 
             $data = json_decode(file_get_contents('php://input'), true);
-            
+
             if (empty($data['facultyCode']) || empty($data['facultyName'])) {
                 throw new Exception('Vui lòng điền đầy đủ thông tin');
             }
@@ -720,8 +726,7 @@ try {
         default:
             throw new Exception('Invalid action');
     }
-
-} catch(Exception $e) {
+} catch (Exception $e) {
     file_put_contents('debug.log', date('Y-m-d H:i:s') . " - Error: " . $e->getMessage() . "\n", FILE_APPEND);
     echo json_encode(['success' => false, 'message' => $e->getMessage()]);
     exit;
@@ -730,4 +735,3 @@ try {
         $conn = null;
     }
 }
-?>
