@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     checkAuth();
     loadUserInfo();
-    loadDashboard();
+    // loadDashboard();
     setupImageUpload();
     if (document.getElementById('courses').style.display !== 'none') {
         loadAvailableCourses();
@@ -305,7 +305,7 @@ async function registerSelectedCourses() {
             // Reload các thông tin cần thiết
             loadAvailableCourses();
             loadRegisteredCourses();
-            loadDashboard();
+            // loadDashboard();
         } else {
             throw new Error(data.message);
         }
@@ -352,7 +352,7 @@ async function cancelRegistration(courseId) {
                 }).then(() => {
                     loadAvailableCourses();
                     loadRegisteredCourses();
-                    loadDashboard();
+                    // loadDashboard();
                 });
             } else {
                 throw new Error(data.message);

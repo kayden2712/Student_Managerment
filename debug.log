@@ -3909,3 +3909,11 @@ s
 2025-01-14 08:24:31 - Request: /Student_Managerment/api.php?action=getCourseList
 2025-01-14 08:24:31 - Getting course list
 2025-01-14 08:24:31 - Found 3 courses
+2025-01-15 03:46:23 - Request: /Student_Managerment/api.php?action=getAvatar
+2025-01-15 03:46:23 - Request: /Student_Managerment/api.php?action=getStudents
+2025-01-15 03:46:25 - Request: /Student_Managerment/api.php?action=getStudents
+2025-01-15 03:46:30 - Request: /Student_Managerment/api.php?action=getCourses
+2025-01-15 03:46:30 - Request: /Student_Managerment/api.php?action=getCourses
+2025-01-15 03:46:31 - Request: /Student_Managerment/api.php?action=getRegisteredStudents&courseCode=CNTT1
+2025-01-15 03:46:33 - Request: /Student_Managerment/api.php?action=getRegisteredStudents&courseCode=CNTT
+2025-01-15 03:46:36 - Request: /Student_Managerment/api.php?action=getRegisteredStudents&courseCode=KT1

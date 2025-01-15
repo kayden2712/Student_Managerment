@@ -8,7 +8,7 @@
 </head>
 <body>
     <div>
-        <form class="controls" id="registerForm" onsubmit="register(event)">
+        <form class="controls" id="registerForm" onsubmit="Register(event)" >
             <a href="Login.html"><span id="arrow">&#11013;</span></a>
             <h1>Đăng kí</h1>
             <div id="regisForm1">
@@ -24,14 +24,14 @@
                 <input type="password" name="password_again" id="password_again" placeholder="Mật khẩu" required>
             </div>
             <div>
-                <button type="submit" id="register"><b>Đăng kí</b></button>
+                <button type="submit"  id="register"><b>Đăng kí</b></button>
             </div>
             <div id="errorDiv" style="color: red; text-align:center; padding-top: 10px;"></div>
         </form>
     </div>
 
     <script>
-        async function register(event) {
+        async function Register(event) {
             event.preventDefault();
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
