@@ -646,18 +646,6 @@ function showCreditRegistration() {
     }
 }
 
-// // Hàm hiển thị danh sách môn học đã đăng ký
-// function showRegisteredCourses() {
-//     document.getElementById('header2').textContent = 'Danh Sách Tín Chỉ Đã Đăng Ký';
-//     hideAllTables();
-//     document.getElementById('registered-courses-table').style.display = 'block';
-//     // Yêu cầu nhập mã sinh viên
-//     const studentId = prompt('Nhập mã sinh viên để xem danh sách đăng ký:');
-//     if (!studentId) return;
-
-//     loadRegisteredCourses(studentId);
-// }
-
 // Hàm load danh sách môn học đã đăng ký từ server
 function loadRegisteredCourses(studentId) {
     if (!studentId) return;

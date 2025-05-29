@@ -318,7 +318,7 @@ switch ($action) {
     case 'registerCourses':
         try {
             if (!checkAuth()) {
-                throw new Exception('Unauthorized');
+                throw new Exception('Lỗi');
             }
 
             $data = json_decode(file_get_contents('php://input'), true);
@@ -337,69 +337,68 @@ switch ($action) {
                 throw new Exception('Vui lòng cập nhật thông tin sinh viên trước');
             }
 
-            $conn->beginTransaction();
+                $conn->beginTransaction();
+                foreach ($courseIds as $courseId) {
+                    // Kiểm tra số lượng đăng ký
+                    $checkStmt = $conn->prepare("
+                        SELECT 
+                            m.SoLuongMax,
+                            COALESCE(m.SoLuongDaDangKy, 0) as SoLuongHienTai
+                        FROM monhoc m   
+                        WHERE m.MaMH = ?
+                        FOR UPDATE
+                    ");
+                    $checkStmt->execute([$courseId]);
+                    $courseInfo = $checkStmt->fetch(PDO::FETCH_ASSOC);
 
-            foreach ($courseIds as $courseId) {
-                // Kiểm tra số lượng đăng ký
-                $checkStmt = $conn->prepare("
-                    SELECT 
-                        m.SoLuongMax,
-                        COALESCE(m.SoLuongDaDangKy, 0) as SoLuongHienTai
-                    FROM monhoc m
-                    WHERE m.MaMH = ?
-                    FOR UPDATE
-                ");
-                $checkStmt->execute([$courseId]);
-                $courseInfo = $checkStmt->fetch(PDO::FETCH_ASSOC);
+                    if ($courseInfo['SoLuongHienTai'] >= $courseInfo['SoLuongMax']) {
+                        throw new Exception("Môn học $courseId đã đủ số lượng");
+                    }
 
-                if ($courseInfo['SoLuongHienTai'] >= $courseInfo['SoLuongMax']) {
-                    throw new Exception("Môn học $courseId đã đủ số lượng");
+                    // Kiểm tra đã đăng ký chưa
+                    $existStmt = $conn->prepare("
+                        SELECT COUNT(*) FROM dangkymonhoc 
+                        WHERE MaSV = ? AND MaMH = ?
+                    ");
+                    $existStmt->execute([$studentId, $courseId]);
+                    
+                    if ($existStmt->fetchColumn() > 0) {
+                        throw new Exception("Môn học $courseId đã được đăng ký trước đó");
+                    }
+
+                    // Thực hiện đăng ký
+                    $insertStmt = $conn->prepare("
+                        INSERT INTO dangkymonhoc (MaSV, MaMH, NgayDangKy, TrangThai)
+                        VALUES (?, ?, NOW(), 1)
+                    ");
+                    $insertStmt->execute([$studentId, $courseId]);
+
+                    // Cập nhật số lượng đã đăng ký trong bảng monhoc
+                    $updateStmt = $conn->prepare("
+                        UPDATE monhoc 
+                        SET SoLuongDaDangKy = COALESCE(SoLuongDaDangKy, 0) + 1
+                        WHERE MaMH = ?
+                    ");
+                    $updateStmt->execute([$courseId]);
                 }
 
-                // Kiểm tra đã đăng ký chưa
-                $existStmt = $conn->prepare("
-                    SELECT COUNT(*) FROM dangkymonhoc 
-                    WHERE MaSV = ? AND MaMH = ?
-                ");
-                $existStmt->execute([$studentId, $courseId]);
-                
-                if ($existStmt->fetchColumn() > 0) {
-                    throw new Exception("Môn học $courseId đã được đăng ký trước đó");
+                $conn->commit();
+
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Đăng ký môn học thành công'
+                ]);
+
+            } catch (Exception $e) {
+                if ($conn->inTransaction()) {
+                    $conn->rollBack();
                 }
-
-                // Thực hiện đăng ký
-                $insertStmt = $conn->prepare("
-                    INSERT INTO dangkymonhoc (MaSV, MaMH, NgayDangKy, TrangThai)
-                    VALUES (?, ?, NOW(), 1)
-                ");
-                $insertStmt->execute([$studentId, $courseId]);
-
-                // Cập nhật số lượng đã đăng ký trong bảng monhoc
-                $updateStmt = $conn->prepare("
-                    UPDATE monhoc 
-                    SET SoLuongDaDangKy = COALESCE(SoLuongDaDangKy, 0) + 1
-                    WHERE MaMH = ?
-                ");
-                $updateStmt->execute([$courseId]);
+                echo json_encode([
+                    'success' => false,
+                    'message' => $e->getMessage()
+                ]);
             }
-
-            $conn->commit();
-
-            echo json_encode([
-                'success' => true,
-                'message' => 'Đăng ký môn học thành công'
-            ]);
-
-        } catch (Exception $e) {
-            if ($conn->inTransaction()) {
-                $conn->rollBack();
-            }
-            echo json_encode([
-                'success' => false,
-                'message' => $e->getMessage()
-            ]);
-        }
-        break;
+            break;
 
     case 'getRegisteredCourses':
         if (!checkAuth()) {

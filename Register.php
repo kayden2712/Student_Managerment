@@ -9,7 +9,6 @@ header('Content-Type: application/json; charset=utf-8');
 set_error_handler(function($severity, $message, $file, $line) {
     throw new ErrorException($message, 0, $severity, $file, $line);
 });
-
 try {
     require_once "config.php";
 
@@ -35,7 +34,7 @@ try {
 
         // Mã hóa mật khẩu
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
+        
         $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
         $stmt = $conn->prepare($sql);
         

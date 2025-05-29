@@ -158,7 +158,8 @@ try {
                 ':code' => $data['code']
             ]);
 
-            sendJsonResponse($success && $stmt->rowCount() > 0, null, $success ? ($stmt->rowCount() > 0 ? 'Cập nhật thông tin sinh viên thành công' : 'Không tìm thấy sinh viên hoặc không có thay đổi') : 'Lỗi khi thực thi câu lệnh SQL');
+            sendJsonResponse($success && $stmt->rowCount() > 0, null, $success ? ($stmt->rowCount() > 0 ? 'Cập nhật thông tin sinh viên thành công'
+                : 'Không tìm thấy sinh viên hoặc không có thay đổi') : 'Lỗi khi thực thi câu lệnh SQL');
             break;
 
         case 'deleteStudent':

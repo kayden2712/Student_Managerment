@@ -61,7 +61,6 @@
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-
                 if (data.success) {
                     alert("Đăng ký thành công!");
                     window.location.href = "Login.html";

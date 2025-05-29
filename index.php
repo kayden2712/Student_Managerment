@@ -6,7 +6,6 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: Login.html');
     exit;
 }
-
 // Kiểm tra role
 if ($_SESSION['role'] === 'admin') {
     header('Location: Home.html');

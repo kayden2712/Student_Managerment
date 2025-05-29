@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     checkAuth();
     loadUserInfo();
     // loadDashboard();
-    setupImageUpload();
+    // setupImageUpload();
     if (document.getElementById('courses').style.display !== 'none') {
         loadAvailableCourses();
     }
@@ -272,7 +272,6 @@ async function loadFaculties() {
 async function registerSelectedCourses() {
     const selectedCourses = Array.from(document.querySelectorAll('input[name="selectedCourses"]:checked:not([disabled])'))
         .map(checkbox => checkbox.value);
-
     if (selectedCourses.length === 0) {
         Swal.fire({
             title: 'Thông báo',
@@ -281,7 +280,6 @@ async function registerSelectedCourses() {
         });
         return;
     }
-
     try {
         const response = await fetch('user.php?action=registerCourses', {
             method: 'POST',
@@ -292,9 +290,7 @@ async function registerSelectedCourses() {
                 courseIds: selectedCourses
             })
         });
-
         const data = await response.json();
-        
         if (data.success) {
             await Swal.fire({
                 title: 'Thành công!',
